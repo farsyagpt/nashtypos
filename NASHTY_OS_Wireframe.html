@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NASHTY OS — Wireframe Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F1EC;--sf:#FFFFFF;--sf2:#EDE9E2;--sf3:#E3DED5;
+  --brd:rgba(0,0,0,.09);--brd2:rgba(0,0,0,.15);
+  --txt:#1C1814;--txt2:#6B6459;--txt3:#A09890;
+  --or:#E4540C;--orL:rgba(228,84,12,.1);
+  --fn:'Plus Jakarta Sans',sans-serif;
+  --mo:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-family:var(--fn);background:var(--bg);color:var(--txt);font-size:14px}
+body{padding:0 0 80px}
+
+.doc-header{background:var(--txt);color:#F4F1EC;padding:40px 60px 36px;display:flex;align-items:flex-start;justify-content:space-between}
+.doc-logo{width:44px;height:44px;border-radius:12px;background:var(--or);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;flex-shrink:0}
+.section{padding:48px 60px 0}
+.section-lbl{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.section-lbl::after{content:'';flex:1;height:1px;background:var(--brd2)}
+.section-title{font-size:26px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px}
+.section-sub{font-size:13px;color:var(--txt2);margin-bottom:28px;max-width:640px;line-height:1.6}
+.wf-frame{background:var(--sf);border:1.5px solid var(--brd2);border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07);margin-bottom:18px}
+.wf-frame-lbl{padding:9px 14px;border-bottom:1px solid var(--brd);font-size:11px;font-weight:700;color:var(--txt3);background:var(--sf2);display:flex;align-items:center;gap:8px;font-family:var(--mo);letter-spacing:.04em}
+.wf-frame-lbl .dot{width:7px;height:7px;border-radius:50%;background:var(--or)}
+.page-divider{margin:52px 0 0;padding:20px 60px;background:var(--txt);color:#F4F1EC;display:flex;align-items:center;justify-content:space-between}
+.pd-num{font-size:48px;font-weight:900;font-family:var(--mo);opacity:.2;line-height:1}
+.pd-title{font-size:20px;font-weight:900;margin-bottom:2px}
+.pd-sub{font-size:12px;color:#9A9690}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
+.ann{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--orL);border-left:3px solid var(--or);border-radius:0 6px 6px 0;margin:6px 0;font-size:11.5px;color:var(--txt2);line-height:1.5}
+.ann b{color:var(--or)}
+.ann-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+.feat-list{display:flex;flex-direction:column;gap:4px;margin:12px 0}
+.feat{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--txt2);padding:7px 10px;background:var(--sf);border:1px solid var(--brd);border-radius:7px}
+.feat-ico{width:20px;height:20px;border-radius:5px;background:var(--orL);color:var(--or);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.feat-name{font-weight:700;color:var(--txt);font-size:12px}
+.feat-desc{font-size:11px;color:var(--txt3);margin-top:1px}
+.scroll-nav{position:fixed;top:50%;right:20px;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:100}
+.sn-dot{width:9px;height:9px;border-radius:50%;background:#C8C0B4;cursor:pointer;transition:all .15s}
+.sn-dot:hover,.sn-dot.act{background:var(--or);transform:scale(1.3)}
+</style>
+</head>
+<body>
+<nav class="scroll-nav" id="snav">
+  <div class="sn-dot act" onclick="gotoSection('sec-cover')" title="Cover"></div>
+  <div class="sn-dot" onclick="gotoSection('sec-pos')" title="POS"></div>
+  <div class="sn-dot" onclick="gotoSection('sec-kds')" title="KDS"></div>
+  <div class="sn-dot" onclick="gotoSection('sec-bo')" title="Backoffice"></div>
+</nav>
+
+<!-- COVER -->
+<div id="sec-cover">
+<div class="doc-header">
+  <div style="display:flex;align-items:flex-start;gap:18px">
+    <div class="doc-logo">N</div>
+    <div>
+      <div style="font-size:11px;color:#9A9690;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mo);margin-bottom:4px">Nashty OS · Product Wireframe</div>
+      <div style="font-size:32px;font-weight:900;letter-spacing:-.02em">NASHTY OS</div>
+      <div style="font-size:13px;color:#9A9690;margin-top:4px;font-family:var(--mo)">POS Terminal · Kitchen Display System · Backoffice</div>
+    </div>
+  </div>
+  <div style="text-align:right;font-size:12px;color:#9A9690;font-family:var(--mo);line-height:1.8">Version 1.0<br>Status: For Review<br>June 2025<br><span style="color:#E4540C">Nashty Hot Chicken</span></div>
+</div>
+
+<div class="section">
+  <div class="section-lbl">Overview</div>
+  <div class="section-title">Tiga Modul Utama Nashty OS</div>
+  <div class="section-sub">Wireframe ini mencakup alur lengkap ketiga sistem yang saling terhubung melalui Firebase Firestore yang sama — realtime sync tanpa API calls antar app.</div>
+
+  <div class="three-col" style="margin-bottom:28px">
+    <div style="background:var(--sf);border:1.5px solid var(--brd2);border-radius:12px;overflow:hidden">
+      <div style="background:#E4540C;padding:16px 18px">
+        <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">01</div>
+        <div style="font-size:18px;font-weight:900;color:#fff">POS Terminal</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.7);margin-top:2px">Kasir · Tablet / Desktop</div>
+      </div>
+      <div style="padding:14px 16px">
+        <div class="feat-list">
+          <div class="feat"><div class="feat-ico">L</div><div><div class="feat-name">Login Staff</div><div class="feat-desc">PIN-based card grid</div></div></div>
+          <div class="feat"><div class="feat-ico">K</div><div><div class="feat-name">Kasir</div><div class="feat-desc">Menu grid + cart + modifier</div></div></div>
+          <div class="feat"><div class="feat-ico">P</div><div><div class="feat-name">Pembayaran</div><div class="feat-desc">8 metode, numpad, kembalian</div></div></div>
+          <div class="feat"><div class="feat-ico">R</div><div><div class="feat-name">Riwayat &amp; Void</div><div class="feat-desc">Void + refund + PIN confirm</div></div></div>
+          <div class="feat"><div class="feat-ico">La</div><div><div class="feat-name">Laporan Harian</div><div class="feat-desc">Ringkasan penjualan per shift</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--sf);border:1.5px solid var(--brd2);border-radius:12px;overflow:hidden">
+      <div style="background:#1A1A1A;padding:16px 18px">
+        <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">02</div>
+        <div style="font-size:18px;font-weight:900;color:#F2EFE8">KDS</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">Dapur · Layar Dedicated</div>
+      </div>
+      <div style="padding:14px 16px">
+        <div class="feat-list">
+          <div class="feat"><div class="feat-ico">Q</div><div><div class="feat-name">Queue Display</div><div class="feat-desc">Cards auto-sort by urgency</div></div></div>
+          <div class="feat"><div class="feat-ico">T</div><div><div class="feat-name">Live Timer</div><div class="feat-desc">Fresh → Warn → Urgent</div></div></div>
+          <div class="feat"><div class="feat-ico">S</div><div><div class="feat-name">Swipe Complete</div><div class="feat-desc">Touch-friendly completion</div></div></div>
+          <div class="feat"><div class="feat-ico">N</div><div><div class="feat-name">Notifikasi</div><div class="feat-desc">Sound + POS overlay confirm</div></div></div>
+          <div class="feat"><div class="feat-ico">F</div><div><div class="feat-name">Filter &amp; Urgent</div><div class="feat-desc">Sticky urgent strip + filter</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--sf);border:1.5px solid var(--brd2);border-radius:12px;overflow:hidden">
+      <div style="background:#2563EB;padding:16px 18px">
+        <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,.55);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px">03</div>
+        <div style="font-size:18px;font-weight:900;color:#fff">Backoffice</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.65);margin-top:2px">Manager / Owner · Desktop</div>
+      </div>
+      <div style="padding:14px 16px">
+        <div class="feat-list">
+          <div class="feat"><div class="feat-ico">D</div><div><div class="feat-name">Dashboard</div><div class="feat-desc">KPI + chart + quick actions</div></div></div>
+          <div class="feat"><div class="feat-ico">M</div><div><div class="feat-name">Menu Management</div><div class="feat-desc">Produk, kategori, modifier</div></div></div>
+          <div class="feat"><div class="feat-ico">C</div><div><div class="feat-name">Config POS &amp; KDS</div><div class="feat-desc">Payment, receipt, thresholds</div></div></div>
+          <div class="feat"><div class="feat-ico">T</div><div><div class="feat-name">Tim &amp; Outlet</div><div class="feat-desc">Kasir, manager, jam operasi</div></div></div>
+          <div class="feat"><div class="feat-ico">A</div><div><div class="feat-name">Analytics</div><div class="feat-desc">Laporan + menu engineering</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase bridge -->
+  <div style="background:var(--sf);border:1.5px solid var(--brd2);border-radius:12px;padding:20px 24px">
+    <div style="font-size:12px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Data Architecture — Shared Firebase Firestore</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap">
+      <div style="background:rgba(228,84,12,.1);border:1.5px solid rgba(228,84,12,.25);border-radius:10px;padding:10px 16px;text-align:center;min-width:110px">
+        <div style="font-size:11px;font-weight:800;color:#E4540C">POS Terminal</div>
+        <div style="font-size:9.5px;color:var(--txt3);margin-top:2px">writes orders</div>
+      </div>
+      <div style="padding:0 10px;color:#C8C0B4;font-size:20px">&#8594;</div>
+      <div style="background:var(--sf2);border:2px solid var(--brd2);border-radius:10px;padding:12px 20px;text-align:center;min-width:160px">
+        <div style="font-size:12px;font-weight:900;color:var(--txt)">Firebase Firestore</div>
+        <div style="font-size:9px;color:var(--txt3);margin-top:3px;font-family:var(--mo)">orders · products · config</div>
+        <div style="font-size:9px;color:var(--txt3);font-family:var(--mo)">cashiers · outlets · logs</div>
+      </div>
+      <div style="padding:0 10px;color:#C8C0B4;font-size:20px">&#8594;</div>
+      <div style="background:rgba(34,197,94,.1);border:1.5px solid rgba(34,197,94,.25);border-radius:10px;padding:10px 16px;text-align:center;min-width:110px">
+        <div style="font-size:11px;font-weight:800;color:#16A34A">KDS</div>
+        <div style="font-size:9.5px;color:var(--txt3);margin-top:2px">onSnapshot listener</div>
+      </div>
+      <div style="padding:0 10px;color:#C8C0B4;font-size:20px">&#8592;</div>
+      <div style="background:rgba(37,99,235,.1);border:1.5px solid rgba(37,99,235,.2);border-radius:10px;padding:10px 16px;text-align:center;min-width:110px">
+        <div style="font-size:11px;font-weight:800;color:#2563EB">Backoffice</div>
+        <div style="font-size:9.5px;color:var(--txt3);margin-top:2px">reads &amp; writes config</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--txt3);text-align:center">Semua modul berbagi satu Firebase project yang sama — realtime sync tanpa API calls antar app</div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ POS ═══ -->
+<div class="page-divider" id="sec-pos">
+  <div><div class="pd-title">POS Terminal</div><div class="pd-sub">Kasir · Tablet &amp; Desktop · Touch-friendly</div></div>
+  <div class="pd-num">01</div>
+</div>
+
+<!-- POS LOGIN -->
+<div class="section">
+  <div class="section-lbl">POS · 1/5</div>
+  <div class="section-title">Login Screen</div>
+  <div class="section-sub">Staff memilih kartu nama lalu input 4-digit PIN. Manager login untuk akses supervisor.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>POS — Login · 1280×800</div>
+    <div style="background:#0D0D0D;padding:32px;display:flex;flex-direction:column;align-items:center;gap:24px;min-height:400px;justify-content:center">
+      <div style="text-align:center">
+        <div style="width:52px;height:52px;border-radius:14px;background:#E4540C;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;box-shadow:0 0 20px rgba(228,84,12,.4)">N</div>
+        <div style="font-size:20px;font-weight:900;color:#F2EFE8">NASHTY OS</div>
+        <div style="font-size:10px;color:#555;margin-top:2px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mo)">POS Terminal · Galaxy Mall</div>
+      </div>
+      <!-- Staff cards -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:480px">
+        <div style="background:#1A1A1A;border:2px solid #E4540C;border-radius:11px;padding:12px 8px;text-align:center;box-shadow:0 0 12px rgba(228,84,12,.25)">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(228,84,12,.2);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#E4540C">CD</div>
+          <div style="font-size:11px;font-weight:700;color:#F2EFE8">Citra D.</div>
+          <div style="font-size:9px;color:#555;margin-top:1px">Kasir</div>
+        </div>
+        <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:12px 8px;text-align:center">
+          <div style="width:32px;height:32px;border-radius:50%;background:#222;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#555">BS</div>
+          <div style="font-size:11px;font-weight:600;color:#9A9690">Budi S.</div>
+          <div style="font-size:9px;color:#555;margin-top:1px">Kasir</div>
+        </div>
+        <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:12px 8px;text-align:center">
+          <div style="width:32px;height:32px;border-radius:50%;background:#222;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#555">AR</div>
+          <div style="font-size:11px;font-weight:600;color:#9A9690">Ani R.</div>
+          <div style="font-size:9px;color:#555;margin-top:1px">Kasir</div>
+        </div>
+        <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:12px 8px;text-align:center">
+          <div style="width:32px;height:32px;border-radius:50%;background:#222;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#555">ADM</div>
+          <div style="font-size:11px;font-weight:600;color:#9A9690">Admin</div>
+          <div style="font-size:9px;color:#555;margin-top:1px">Manager</div>
+        </div>
+      </div>
+      <!-- PIN pad -->
+      <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 18px;width:240px">
+        <div style="font-size:10px;color:#555;text-align:center;margin-bottom:9px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mo)">PIN · Citra Dewi</div>
+        <div style="display:flex;justify-content:center;gap:7px;margin-bottom:12px">
+          <div style="width:13px;height:13px;border-radius:50%;background:#E4540C"></div>
+          <div style="width:13px;height:13px;border-radius:50%;background:#E4540C"></div>
+          <div style="width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2)"></div>
+          <div style="width:13px;height:13px;border-radius:50%;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2)"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px" id="numpad-demo">
+          <!-- filled by script -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann-grid">
+    <div class="ann"><b>Staff Cards:</b> Grid 2–6 staff. Klik kartu → PIN pad muncul. Kartu aktif highlight oranye.</div>
+    <div class="ann"><b>PIN Input:</b> 4-digit. Dots filled sesuai input. ✓ aktif hanya saat 4 digit terisi.</div>
+    <div class="ann"><b>Manager Mode:</b> Role Manager mendapat akses Laporan &amp; Void. Kasir biasa terbatas.</div>
+    <div class="ann"><b>Auto-logout:</b> Idle X menit → kembali ke halaman ini (configurable Backoffice).</div>
+  </div>
+</div>
+
+<!-- POS KASIR -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">POS · 2/5</div>
+  <div class="section-title">Kasir — Menu &amp; Cart</div>
+  <div class="section-sub">Layar utama POS. Kiri: grid menu + kategori tab. Kanan: cart aktif dengan total, tipe order, diskon, member.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>POS — Kasir · Full Screen</div>
+    <div style="display:flex;height:520px;background:#111;overflow:hidden">
+      <!-- LEFT Menu -->
+      <div style="flex:1;display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,.06)">
+        <div style="height:46px;background:#141414;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 12px;gap:8px">
+          <div style="width:26px;height:26px;border-radius:7px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">N</div>
+          <div style="font-size:12px;font-weight:700;color:#F2EFE8">NASHTY POS</div>
+          <div style="margin-left:auto;display:flex;gap:5px">
+            <div style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.2);border-radius:5px;padding:3px 8px;font-size:9.5px;font-weight:700;color:#22C55E">&#9679; Live</div>
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:3px 8px;font-size:9.5px;color:#9A9690;font-family:var(--mo)">Citra</div>
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:3px 8px;font-size:9.5px;color:#9A9690">Laporan</div>
+          </div>
+        </div>
+        <div style="padding:7px 11px;background:#141414;border-bottom:1px solid rgba(255,255,255,.04)">
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:7px;height:28px;display:flex;align-items:center;padding:0 9px;gap:5px">
+            <span style="font-size:11px;color:#555">&#128269;</span>
+            <span style="font-size:10.5px;color:#555;font-family:var(--mo)">Cari menu...</span>
+          </div>
+        </div>
+        <!-- Category tabs -->
+        <div style="display:flex;gap:4px;padding:7px 11px;background:#141414;border-bottom:1px solid rgba(255,255,255,.04);overflow-x:auto">
+          <div style="padding:4px 10px;border-radius:14px;font-size:10.5px;font-weight:700;background:#E4540C;color:#fff;white-space:nowrap">&#11088; Favorit</div>
+          <div style="padding:4px 10px;border-radius:14px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.05);color:#9A9690;white-space:nowrap">Makanan</div>
+          <div style="padding:4px 10px;border-radius:14px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.05);color:#9A9690;white-space:nowrap">Minuman</div>
+          <div style="padding:4px 10px;border-radius:14px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.05);color:#9A9690;white-space:nowrap">Camilan</div>
+          <div style="padding:4px 10px;border-radius:14px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.05);color:#9A9690;white-space:nowrap">Dessert</div>
+          <div style="padding:4px 10px;border-radius:14px;font-size:10.5px;font-weight:600;background:rgba(255,255,255,.05);color:#9A9690;white-space:nowrap">Add On</div>
+        </div>
+        <!-- Menu grid -->
+        <div style="flex:1;overflow-y:auto;padding:10px 11px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start">
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:9px;padding:8px;cursor:pointer"><div style="height:38px;background:#222;border-radius:6px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:18px">&#127831;</div><div style="font-size:10.5px;font-weight:700;color:#F2EFE8">Ayam Bakar Madu</div><div style="font-size:10px;color:#E4540C;font-weight:700;font-family:var(--mo);margin-top:2px">Rp 55.000</div></div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:9px;padding:8px;cursor:pointer"><div style="height:38px;background:#222;border-radius:6px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:18px">&#127834;</div><div style="font-size:10.5px;font-weight:700;color:#F2EFE8">Nasi Goreng</div><div style="font-size:10px;color:#E4540C;font-weight:700;font-family:var(--mo);margin-top:2px">Rp 35.000</div></div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:9px;padding:8px;cursor:pointer"><div style="height:38px;background:#222;border-radius:6px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:18px">&#9749;</div><div style="font-size:10.5px;font-weight:700;color:#F2EFE8">Kopi Susu Aren</div><div style="font-size:10px;color:#E4540C;font-weight:700;font-family:var(--mo);margin-top:2px">Rp 22.000</div></div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:9px;padding:8px;cursor:pointer"><div style="height:38px;background:#222;border-radius:6px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:18px">&#129371;</div><div style="font-size:10.5px;font-weight:700;color:#F2EFE8">Es Teh Manis</div><div style="font-size:10px;color:#E4540C;font-weight:700;font-family:var(--mo);margin-top:2px">Rp 8.000</div></div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:9px;padding:8px;cursor:pointer"><div style="height:38px;background:#222;border-radius:6px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:18px">&#127839;</div><div style="font-size:10.5px;font-weight:700;color:#F2EFE8">French Fries</div><div style="font-size:10px;color:#E4540C;font-weight:700;font-family:var(--mo);margin-top:2px">Rp 22.000</div></div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:9px;padding:8px;cursor:pointer"><div style="height:38px;background:#222;border-radius:6px;margin-bottom:5px;display:flex;align-items:center;justify-content:center;font-size:18px">&#127836;</div><div style="font-size:10.5px;font-weight:700;color:#F2EFE8">Rawon Spesial</div><div style="font-size:10px;color:#E4540C;font-weight:700;font-family:var(--mo);margin-top:2px">Rp 42.000</div></div>
+        </div>
+      </div>
+      <!-- RIGHT Cart -->
+      <div style="width:270px;flex-shrink:0;display:flex;flex-direction:column;background:#141414">
+        <div style="padding:9px 11px;border-bottom:1px solid rgba(255,255,255,.05)">
+          <div style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Tipe Order</div>
+          <div style="display:flex;gap:5px">
+            <div style="flex:1;height:26px;border-radius:6px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#fff">Dine In</div>
+            <div style="flex:1;height:26px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:#9A9690">Take Away</div>
+          </div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:7px 11px;display:flex;flex-direction:column;gap:5px">
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:7px;padding:7px 8px">
+            <div style="display:flex;justify-content:space-between"><span style="font-size:11px;font-weight:700;color:#F2EFE8">Ayam Bakar Madu</span><span style="font-size:10.5px;font-weight:700;color:#E4540C;font-family:var(--mo)">Rp 55.000</span></div>
+            <div style="font-size:9.5px;color:#555;margin-top:1px">Pedas Extra, +Extra Sambal</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:5px">
+              <div style="width:18px;height:18px;border-radius:4px;background:#222;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;color:#9A9690">&#8722;</div>
+              <div style="font-size:12px;font-weight:800;color:#F2EFE8;min-width:14px;text-align:center">1</div>
+              <div style="width:18px;height:18px;border-radius:4px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff">+</div>
+              <div style="margin-left:auto;font-size:9px;color:#EF4444;cursor:pointer">hapus</div>
+            </div>
+          </div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:7px;padding:7px 8px">
+            <div style="display:flex;justify-content:space-between"><span style="font-size:11px;font-weight:700;color:#F2EFE8">Nasi Goreng Spesial</span><span style="font-size:10.5px;font-weight:700;color:#E4540C;font-family:var(--mo)">Rp 70.000</span></div>
+            <div style="font-size:9.5px;color:#555;margin-top:1px">Pedas Sedang · x2</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:5px">
+              <div style="width:18px;height:18px;border-radius:4px;background:#222;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;color:#9A9690">&#8722;</div>
+              <div style="font-size:12px;font-weight:800;color:#F2EFE8;min-width:14px;text-align:center">2</div>
+              <div style="width:18px;height:18px;border-radius:4px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff">+</div>
+              <div style="margin-left:auto;font-size:9px;color:#EF4444;cursor:pointer">hapus</div>
+            </div>
+          </div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.06);border-radius:7px;padding:7px 8px">
+            <div style="display:flex;justify-content:space-between"><span style="font-size:11px;font-weight:700;color:#F2EFE8">Kopi Susu Aren</span><span style="font-size:10.5px;font-weight:700;color:#E4540C;font-family:var(--mo)">Rp 22.000</span></div>
+            <div style="font-size:9.5px;color:#555;margin-top:1px">Dingin, +Oat Milk</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:5px">
+              <div style="width:18px;height:18px;border-radius:4px;background:#222;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:11px;color:#9A9690">&#8722;</div>
+              <div style="font-size:12px;font-weight:800;color:#F2EFE8;min-width:14px;text-align:center">1</div>
+              <div style="width:18px;height:18px;border-radius:4px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff">+</div>
+              <div style="margin-left:auto;font-size:9px;color:#EF4444;cursor:pointer">hapus</div>
+            </div>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.05);padding:9px 11px;display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:#9A9690"><span>Subtotal</span><span style="font-family:var(--mo)">Rp 147.000</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:#555"><span>Pajak 11%</span><span style="font-family:var(--mo)">Rp 16.170</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:#555"><span>Service 5%</span><span style="font-family:var(--mo)">Rp 7.350</span></div>
+          <div style="height:1px;background:rgba(255,255,255,.05)"></div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:900;color:#F2EFE8"><span>Total</span><span style="font-family:var(--mo);color:#E4540C">Rp 170.520</span></div>
+          <div style="display:flex;gap:5px;margin-top:1px">
+            <div style="flex:1;height:28px;background:#1A1A1A;border:1px solid rgba(255,255,255,.08);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:#9A9690;cursor:pointer">Diskon</div>
+            <div style="flex:1;height:28px;background:#1A1A1A;border:1px solid rgba(255,255,255,.08);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:#9A9690;cursor:pointer">Member</div>
+          </div>
+          <div style="height:38px;background:#E4540C;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;cursor:pointer;box-shadow:0 3px 12px rgba(228,84,12,.4)">Bayar Rp 170.520</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann-grid">
+    <div class="ann"><b>Menu Grid:</b> 3 kolom. Klik item → modifier modal jika ada modifier. Tanpa modifier langsung masuk cart.</div>
+    <div class="ann"><b>Cart:</b> Real-time update. Qty +/−. Catatan per item. Swipe hapus (mobile).</div>
+    <div class="ann"><b>Tipe Order:</b> Dine In / Take Away toggle. Delivery dipilih di pembayaran.</div>
+    <div class="ann"><b>Diskon &amp; Member:</b> Modal lookup phone/card. Loyalty auto-apply.</div>
+  </div>
+</div>
+
+<!-- POS MODIFIER MODAL -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">POS · 2b</div>
+  <div class="section-title">Modifier Modal</div>
+  <div class="section-sub">Muncul saat item diklik dan memiliki modifier. Required modifier wajib sebelum Add to Cart aktif.</div>
+  <div class="two-col">
+    <div class="wf-frame">
+      <div class="wf-frame-lbl"><div class="dot"></div>Modal Opsi Produk</div>
+      <div style="background:#0D0D0D;padding:14px;min-height:340px">
+        <div style="background:#141414;border:1px solid rgba(255,255,255,.1);border-radius:13px;overflow:hidden">
+          <div style="padding:12px 15px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center">
+            <div><div style="font-size:14px;font-weight:800;color:#F2EFE8">Ayam Bakar Madu</div><div style="font-size:10.5px;color:#9A9690;margin-top:1px">Rp 55.000</div></div>
+            <div style="font-size:16px;color:#555;cursor:pointer">&#10005;</div>
+          </div>
+          <div style="padding:11px 14px;display:flex;flex-direction:column;gap:11px">
+            <!-- Required modifier -->
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <div style="font-size:11px;font-weight:700;color:#F2EFE8">Level Pedas</div>
+                <div style="font-size:9px;background:rgba(228,84,12,.15);color:#E4540C;padding:2px 7px;border-radius:4px;font-weight:700">WAJIB</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:7px;cursor:pointer"><span style="font-size:11px;color:#9A9690">Original</span><div style="width:13px;height:13px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2)"></div></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:7px;cursor:pointer"><span style="font-size:11px;color:#9A9690">Pedas Sedang</span><div style="width:13px;height:13px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2)"></div></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:rgba(228,84,12,.1);border:1px solid rgba(228,84,12,.3);border-radius:7px;cursor:pointer"><span style="font-size:11px;font-weight:700;color:#E4540C">Pedas Extra</span><div style="width:13px;height:13px;border-radius:50%;background:#E4540C;border:1.5px solid #E4540C;display:flex;align-items:center;justify-content:center"><div style="width:5px;height:5px;border-radius:50%;background:#fff"></div></div></div>
+              </div>
+            </div>
+            <!-- Optional addons -->
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                <div style="font-size:11px;font-weight:700;color:#F2EFE8">Variasi Add-on</div>
+                <div style="font-size:9px;background:rgba(255,255,255,.06);color:#9A9690;padding:2px 7px;border-radius:4px;font-weight:700">OPSIONAL</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:7px;cursor:pointer">
+                  <span style="font-size:11px;font-weight:700;color:#22C55E">Extra Sambal</span>
+                  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:9.5px;color:#555;font-family:var(--mo)">+Rp 3.000</span><div style="width:13px;height:13px;border-radius:3px;background:#22C55E;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:7px;cursor:pointer">
+                  <span style="font-size:11px;font-weight:700;color:#22C55E">Nasi Putih</span>
+                  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:9.5px;color:#555;font-family:var(--mo)">+Rp 6.000</span><div style="width:13px;height:13px;border-radius:3px;background:#22C55E;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:7px;cursor:pointer">
+                  <span style="font-size:11px;color:#9A9690">Lalapan</span>
+                  <div style="display:flex;align-items:center;gap:6px"><span style="font-size:9.5px;color:#555;font-family:var(--mo)">+Rp 4.000</span><div style="width:13px;height:13px;border-radius:3px;border:1.5px solid rgba(255,255,255,.2)"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:9px 14px;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:9px">
+            <div style="display:flex;gap:5px;align-items:center">
+              <div style="width:24px;height:24px;border-radius:6px;background:#222;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;color:#9A9690">&#8722;</div>
+              <div style="font-size:14px;font-weight:800;color:#F2EFE8;width:16px;text-align:center">1</div>
+              <div style="width:24px;height:24px;border-radius:6px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff">+</div>
+            </div>
+            <div style="flex:1;height:34px;background:#E4540C;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;cursor:pointer">Tambah ke Cart · Rp 64.000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="feat-list" style="margin-bottom:12px">
+        <div class="feat"><div class="feat-ico">R</div><div><div class="feat-name">Required Modifier</div><div class="feat-desc">Radio button. CTA disabled sampai dipilih.</div></div></div>
+        <div class="feat"><div class="feat-ico">O</div><div><div class="feat-name">Optional Add-on</div><div class="feat-desc">Checkbox multi-pilih. Harga tambahan per item.</div></div></div>
+        <div class="feat"><div class="feat-ico">T</div><div><div class="feat-name">Running Total</div><div class="feat-desc">Total di tombol update realtime.</div></div></div>
+        <div class="feat"><div class="feat-ico">N</div><div><div class="feat-name">Catatan Item</div><div class="feat-desc">Field note per item. Sync ke KDS card.</div></div></div>
+      </div>
+      <div class="ann"><b>Backoffice:</b> Modifier group, tipe pilihan, harga, urutan diatur dari Backoffice → Menu → Modifier Groups.</div>
+    </div>
+  </div>
+</div>
+
+<!-- POS PEMBAYARAN -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">POS · 3/5</div>
+  <div class="section-title">Modal Pembayaran</div>
+  <div class="section-sub">8 metode. Cash: numpad + kembalian. Delivery: numpad terkunci. QRIS/Transfer: konfirmasi manual.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>Modal Pembayaran — Cash Selected</div>
+    <div style="background:rgba(0,0,0,.6);padding:20px;display:flex;align-items:center;justify-content:center;min-height:420px">
+      <div style="background:#141414;border:1px solid rgba(255,255,255,.11);border-radius:16px;width:500px;overflow:hidden">
+        <div style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center">
+          <div style="font-size:15px;font-weight:900;color:#F2EFE8">Pembayaran</div>
+          <div style="font-size:20px;font-weight:900;color:#E4540C;font-family:var(--mo)">Rp 170.520</div>
+        </div>
+        <div style="padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06)">
+          <div style="font-size:9px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px">Pilih Metode</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px">
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(34,197,94,.1);border:1.5px solid rgba(34,197,94,.3);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#22C55E;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:700;color:#22C55E">Tunai</div></div>
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#06B6D4;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:600;color:#9A9690">Transfer</div></div>
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#3B82F6;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:600;color:#9A9690">QRIS</div></div>
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#1E40AF;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:600;color:#9A9690">BCA</div></div>
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#A855F7;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:600;color:#9A9690">Debit</div></div>
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#E3175B;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:600;color:#9A9690">GoFood</div></div>
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#00B14F;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:600;color:#9A9690">GrabFood</div></div>
+            <div style="padding:7px 5px;border-radius:7px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);text-align:center"><div style="width:7px;height:7px;border-radius:50%;background:#EE4D2D;margin:0 auto 3px"></div><div style="font-size:9.5px;font-weight:600;color:#9A9690">ShopeeFood</div></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;padding:12px 14px">
+          <div style="flex:1">
+            <div style="font-size:9.5px;color:#555;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Uang Diterima</div>
+            <div style="background:#0D0D0D;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 11px;font-size:20px;font-weight:900;color:#E4540C;font-family:var(--mo);text-align:right;margin-bottom:7px">200.000</div>
+            <div style="display:flex;gap:4px;margin-bottom:7px">
+              <div style="flex:1;background:rgba(228,84,12,.1);border:1px solid rgba(228,84,12,.18);border-radius:5px;padding:3px;text-align:center;font-size:9.5px;font-weight:700;color:#E4540C;cursor:pointer;font-family:var(--mo)">+50K</div>
+              <div style="flex:1;background:rgba(228,84,12,.1);border:1px solid rgba(228,84,12,.18);border-radius:5px;padding:3px;text-align:center;font-size:9.5px;font-weight:700;color:#E4540C;cursor:pointer;font-family:var(--mo)">+100K</div>
+              <div style="flex:1;background:rgba(228,84,12,.1);border:1px solid rgba(228,84,12,.18);border-radius:5px;padding:3px;text-align:center;font-size:9.5px;font-weight:700;color:#E4540C;cursor:pointer;font-family:var(--mo)">+200K</div>
+              <div style="flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:3px;text-align:center;font-size:9.5px;font-weight:700;color:#9A9690;cursor:pointer">Pas</div>
+            </div>
+            <div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:11px;color:#9A9690">Kembalian</span>
+              <span style="font-size:15px;font-weight:900;color:#22C55E;font-family:var(--mo)">Rp 29.480</span>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:152px;align-content:start">
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">7</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">8</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">9</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">4</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">5</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">6</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">1</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">2</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">3</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#9A9690;cursor:pointer">&#9003;</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#F2EFE8;cursor:pointer">0</div>
+            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:6px;height:34px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#F2EFE8;cursor:pointer">00</div>
+          </div>
+        </div>
+        <div style="padding:0 14px 13px">
+          <div style="height:40px;background:#E4540C;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;cursor:pointer;box-shadow:0 4px 14px rgba(228,84,12,.4)">&#10003; Proses Pembayaran</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann-grid">
+    <div class="ann"><b>Cash:</b> Numpad aktif. Shortcut nominal. Kembalian auto-kalkulasi. UANG PAS = set uang sama dengan total.</div>
+    <div class="ann"><b>Delivery:</b> Numpad terkunci, field nomor order platform. Disabled saat Dine In.</div>
+    <div class="ann"><b>QRIS/Transfer:</b> No numpad, hanya tombol konfirmasi manual.</div>
+    <div class="ann"><b>8 Metode:</b> Tunai, Transfer, QRIS, BCA, Debit, GoFood, GrabFood, ShopeeFood. Toggle dari Backoffice.</div>
+  </div>
+</div>
+
+<!-- POS RIWAYAT -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">POS · 4/5</div>
+  <div class="section-title">Riwayat &amp; Void</div>
+  <div class="section-sub">Daftar transaksi hari ini. Void: alasan + PIN konfirmasi. Refund masuk ke Petty Cash di Laporan.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>POS — Riwayat Transaksi</div>
+    <div style="background:#111;min-height:280px">
+      <div style="display:flex;border-bottom:1px solid rgba(255,255,255,.06);padding:0 14px">
+        <div style="padding:9px 13px;font-size:12px;font-weight:600;color:#9A9690;border-bottom:2px solid transparent;cursor:pointer">Kasir</div>
+        <div style="padding:9px 13px;font-size:12px;font-weight:700;color:#E4540C;border-bottom:2px solid #E4540C;cursor:pointer">Riwayat</div>
+        <div style="padding:9px 13px;font-size:12px;font-weight:600;color:#9A9690;border-bottom:2px solid transparent;cursor:pointer">Laporan</div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr 90px 80px 70px 90px;padding:7px 14px;border-bottom:1px solid rgba(255,255,255,.04)">
+        <div style="font-size:9px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.07em">No Order</div>
+        <div style="font-size:9px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.07em">Items</div>
+        <div style="font-size:9px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.07em">Total</div>
+        <div style="font-size:9px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.07em">Metode</div>
+        <div style="font-size:9px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.07em">Status</div>
+        <div style="font-size:9px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.07em">Aksi</div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr 90px 80px 70px 90px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.03);align-items:center">
+        <div style="font-size:11px;font-weight:700;color:#F2EFE8;font-family:var(--mo)">#0188</div>
+        <div style="font-size:10.5px;color:#9A9690">Nasi Goreng ×2, Kopi...</div>
+        <div style="font-size:10.5px;font-weight:700;color:#F2EFE8;font-family:var(--mo)">170.520</div>
+        <div style="font-size:10.5px;color:#9A9690">Tunai</div>
+        <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.1);color:#22C55E;display:inline">Lunas</div>
+        <div style="display:flex;gap:4px"><div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:3px 7px;font-size:9.5px;color:#9A9690;cursor:pointer">Struk</div><div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);border-radius:5px;padding:3px 7px;font-size:9.5px;color:#EF4444;cursor:pointer">Void</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr 90px 80px 70px 90px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.03);align-items:center">
+        <div style="font-size:11px;font-weight:700;color:#F2EFE8;font-family:var(--mo)">#0187</div>
+        <div style="font-size:10.5px;color:#9A9690">Ayam Bakar ×1, Teh...</div>
+        <div style="font-size:10.5px;font-weight:700;color:#F2EFE8;font-family:var(--mo)">96.280</div>
+        <div style="font-size:10.5px;color:#9A9690">QRIS</div>
+        <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.1);color:#22C55E;display:inline">Lunas</div>
+        <div style="display:flex;gap:4px"><div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:3px 7px;font-size:9.5px;color:#9A9690;cursor:pointer">Struk</div><div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);border-radius:5px;padding:3px 7px;font-size:9.5px;color:#EF4444;cursor:pointer">Void</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr 90px 80px 70px 90px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.03);align-items:center;opacity:.6">
+        <div style="font-size:11px;font-weight:700;color:#F2EFE8;font-family:var(--mo)">#0185</div>
+        <div style="font-size:10.5px;color:#9A9690">French Fries ×2</div>
+        <div style="font-size:10.5px;font-weight:700;color:#F2EFE8;font-family:var(--mo)">44.700</div>
+        <div style="font-size:10.5px;color:#9A9690">Transfer</div>
+        <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(239,68,68,.12);color:#EF4444;display:inline">VOID</div>
+        <div style="display:flex;gap:4px"><div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:5px;padding:3px 7px;font-size:9.5px;color:#9A9690;cursor:pointer">Struk</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POS LAPORAN -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">POS · 5/5</div>
+  <div class="section-title">Laporan Harian</div>
+  <div class="section-sub">Summary penjualan shift aktif. Gross → Diskon → Refund → Net → Pajak → Service → Total Collected.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>POS — Laporan</div>
+    <div style="background:#111;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:240px">
+      <div style="background:#141414;border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden">
+        <div style="padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px;font-weight:700;color:#F2EFE8">Ringkasan Penjualan</div>
+        <div style="display:flex;justify-content:space-between;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><span style="font-size:11px;color:#9A9690">Gross Sales</span><span style="font-size:11px;font-family:var(--mo);color:#F2EFE8">Rp 4.280.000</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><span style="font-size:11px;color:#9A9690">Diskon</span><span style="font-size:11px;font-family:var(--mo);color:#555">(Rp 120.000)</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><span style="font-size:11px;color:#9A9690">Refund</span><span style="font-size:11px;font-family:var(--mo);color:#555">(Rp 96.280)</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03);background:rgba(255,255,255,.02)"><span style="font-size:11px;font-weight:700;color:#F2EFE8">Net Sales</span><span style="font-size:11px;font-weight:700;font-family:var(--mo);color:#F2EFE8">Rp 4.063.720</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><span style="font-size:11px;color:#9A9690">Pajak (11%)</span><span style="font-size:11px;font-family:var(--mo);color:#F2EFE8">Rp 447.009</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><span style="font-size:11px;color:#9A9690">Service (5%)</span><span style="font-size:11px;font-family:var(--mo);color:#F2EFE8">Rp 203.186</span></div>
+        <div style="display:flex;justify-content:space-between;padding:9px 13px;background:rgba(255,255,255,.03)"><span style="font-size:12px;font-weight:900;color:#F2EFE8">Total Collected</span><span style="font-size:13px;font-weight:900;font-family:var(--mo);color:#E4540C">Rp 4.713.915</span></div>
+      </div>
+      <div style="background:#141414;border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden">
+        <div style="padding:9px 13px;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px;font-weight:700;color:#F2EFE8">Per Metode Pembayaran</div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><div style="width:6px;height:6px;border-radius:50%;background:#22C55E;flex-shrink:0"></div><span style="font-size:11px;color:#9A9690;flex:1">Tunai</span><span style="font-size:11px;font-family:var(--mo);color:#F2EFE8">Rp 1.240.000</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><div style="width:6px;height:6px;border-radius:50%;background:#3B82F6;flex-shrink:0"></div><span style="font-size:11px;color:#9A9690;flex:1">QRIS</span><span style="font-size:11px;font-family:var(--mo);color:#F2EFE8">Rp 980.000</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.03)"><div style="width:6px;height:6px;border-radius:50%;background:#00B14F;flex-shrink:0"></div><span style="font-size:11px;color:#9A9690;flex:1">GrabFood</span><span style="font-size:11px;font-family:var(--mo);color:#F2EFE8">Rp 720.000</span></div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 13px"><div style="width:6px;height:6px;border-radius:50%;background:#06B6D4;flex-shrink:0"></div><span style="font-size:11px;color:#9A9690;flex:1">Transfer</span><span style="font-size:11px;font-family:var(--mo);color:#F2EFE8">Rp 580.000</span></div>
+        <div style="padding:10px 13px;border-top:1px solid rgba(255,255,255,.05)">
+          <div style="font-size:10px;color:#555;margin-bottom:8px">* Laporan lengkap di Backoffice</div>
+          <div style="display:flex;gap:6px">
+            <div style="flex:1;height:30px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:600;color:#9A9690;cursor:pointer">Export PDF</div>
+            <div style="flex:1;height:30px;background:#E4540C;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#fff;cursor:pointer">Cetak Struk</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ KDS ═══ -->
+<div class="page-divider" id="sec-kds">
+  <div><div class="pd-title">Kitchen Display System</div><div class="pd-sub">Dapur · Tablet/Monitor Dedicated · Dark Mode Default</div></div>
+  <div class="pd-num">02</div>
+</div>
+
+<!-- KDS MAIN QUEUE -->
+<div class="section">
+  <div class="section-lbl">KDS · 1/3</div>
+  <div class="section-title">Main Queue Display</div>
+  <div class="section-sub">Layar utama dapur. Auto-sort: Urgent → Warning → Fresh. Live timer tiap detik. Swipe to complete.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>KDS — Queue Display · Dark Mode · 1280×800</div>
+    <div style="background:#0D0D0D;display:flex;flex-direction:column;min-height:580px">
+      <!-- Topbar -->
+      <div style="height:52px;background:#141414;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 18px;gap:12px;flex-shrink:0">
+        <div style="width:30px;height:30px;border-radius:8px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff">N</div>
+        <div><div style="font-size:12px;font-weight:700;color:#F2EFE8">NASHTY OS</div><div style="font-size:9px;color:#555;letter-spacing:.08em;text-transform:uppercase">Kitchen Display</div></div>
+        <div style="height:22px;width:1px;background:rgba(255,255,255,.08)"></div>
+        <div style="font-size:11px;color:#9A9690;background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:3px 9px">Dapur Utama</div>
+        <div style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.2);border-radius:18px;padding:3px 9px;display:flex;align-items:center;gap:5px">
+          <div style="width:6px;height:6px;border-radius:50%;background:#22C55E"></div>
+          <span style="font-size:10px;font-weight:700;color:#22C55E">Live</span>
+        </div>
+        <!-- Queue summary -->
+        <div style="display:flex;gap:8px">
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:7px;padding:4px 10px;text-align:center"><div style="font-size:16px;font-weight:900;color:#F2EFE8;font-family:var(--mo);line-height:1">6</div><div style="font-size:8.5px;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-top:1px">Orders</div></div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:7px;padding:4px 10px;text-align:center"><div style="font-size:16px;font-weight:900;color:#F2EFE8;font-family:var(--mo);line-height:1">22</div><div style="font-size:8.5px;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-top:1px">Items</div></div>
+          <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.22);border-radius:7px;padding:4px 10px;text-align:center"><div style="font-size:16px;font-weight:900;color:#EF4444;font-family:var(--mo);line-height:1">2</div><div style="font-size:8.5px;color:#555;text-transform:uppercase;letter-spacing:.06em;margin-top:1px">Urgent</div></div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <div style="font-size:17px;font-weight:500;color:#F2EFE8;font-family:var(--mo)">14:32:18</div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:4px 9px;font-size:11px;color:#9A9690;cursor:pointer">&#9728; Day</div>
+          <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.07);border-radius:6px;padding:4px 9px;font-size:11px;color:#9A9690;cursor:pointer">+ Order</div>
+        </div>
+      </div>
+      <!-- Urgent strip -->
+      <div style="background:rgba(239,68,68,.08);border-bottom:1px solid rgba(239,68,68,.18);padding:5px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <span style="font-size:10px;font-weight:800;color:#EF4444;text-transform:uppercase;letter-spacing:.07em">URGENT</span>
+        <div style="display:flex;gap:5px">
+          <div style="background:#EF4444;color:#fff;font-size:10px;font-weight:900;font-family:var(--mo);padding:2px 8px;border-radius:4px;cursor:pointer">#0190</div>
+          <div style="background:#EF4444;color:#fff;font-size:10px;font-weight:900;font-family:var(--mo);padding:2px 8px;border-radius:4px;cursor:pointer">#0186</div>
+        </div>
+      </div>
+      <!-- Filter bar -->
+      <div style="display:flex;align-items:center;gap:6px;padding:7px 18px;background:#141414;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0">
+        <div style="padding:4px 12px;border-radius:14px;font-size:11px;font-weight:700;border:1px solid #E4540C;background:#E4540C;color:#fff;cursor:pointer">Semua</div>
+        <div style="padding:4px 12px;border-radius:14px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.07);color:#9A9690;cursor:pointer">Dine In</div>
+        <div style="padding:4px 12px;border-radius:14px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.07);color:#9A9690;cursor:pointer">Take Away</div>
+        <div style="padding:4px 12px;border-radius:14px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.07);color:#9A9690;cursor:pointer">Delivery</div>
+        <div style="padding:4px 12px;border-radius:14px;font-size:11px;font-weight:600;border:1px solid rgba(239,68,68,.3);color:#EF4444;cursor:pointer">&#9888; Urgent (2)</div>
+        <div style="margin-left:auto;font-size:10px;color:#555">Auto-sort: Urgent &#8594; Warning &#8594; Fresh</div>
+      </div>
+      <!-- Cards grid -->
+      <div style="flex:1;padding:12px 16px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-content:start;overflow-y:auto">
+
+        <!-- URGENT card -->
+        <div style="background:#141414;border:1.5px solid rgba(239,68,68,.45);border-radius:12px;overflow:hidden;position:relative">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:#EF4444;border-radius:12px 0 0 12px"></div>
+          <div style="padding:9px 11px 8px 16px;background:#1A1A1A;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between">
+            <div>
+              <div style="font-size:20px;font-weight:900;color:#F2EFE8;font-family:var(--mo)">#0190</div>
+              <div style="display:flex;gap:5px;margin-top:2px"><span style="font-size:10px;color:#9A9690">TAKE</span><span style="background:rgba(59,130,246,.12);color:#60A5FA;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:4px;text-transform:uppercase">Take Away</span></div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:22px;font-weight:700;color:#EF4444;font-family:var(--mo)">23:37</div>
+              <div style="font-size:8px;color:#555;text-align:right;margin-bottom:2px">menit:detik</div>
+              <span style="font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(239,68,68,.14);color:#EF4444">&gt;20 mnt</span>
+            </div>
+          </div>
+          <div style="padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:6px 8px;display:flex;gap:6px">
+              <div style="width:20px;height:20px;border-radius:5px;background:#EF4444;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0">1</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#F2EFE8">Sate Ayam 10pcs</div>
+                <div style="display:flex;gap:3px;margin-top:3px;flex-wrap:wrap">
+                  <span style="background:rgba(228,84,12,.1);color:#E4540C;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px">Mix</span>
+                  <span style="background:rgba(34,197,94,.1);color:#22C55E;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px">+Extra Sate</span>
+                </div>
+              </div>
+            </div>
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:6px 8px;display:flex;gap:6px">
+              <div style="width:20px;height:20px;border-radius:5px;background:#EF4444;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0">2</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#F2EFE8">Es Teh Manis</div>
+                <div style="margin-top:3px;padding:3px 6px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.22);border-radius:5px;font-size:10px;font-weight:700;color:#F59E0B">&#9888; Tanpa es untuk 1</div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:7px 10px 9px;border-top:1px solid rgba(255,255,255,.05);background:#1A1A1A;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:10px;color:#555">Kasir: Ani</span>
+            <div style="width:140px;height:32px;border-radius:16px;background:#1F1F1F;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;position:relative;overflow:hidden">
+              <div style="position:absolute;width:26px;height:26px;border-radius:13px;background:#EF4444;left:3px;display:flex;align-items:center;justify-content:center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <span style="font-size:9.5px;font-weight:700;color:#555;width:100%;text-align:center">Swipe &#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- WARN card -->
+        <div style="background:#141414;border:1.5px solid rgba(245,158,11,.3);border-radius:12px;overflow:hidden;position:relative">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:#F59E0B;border-radius:12px 0 0 12px"></div>
+          <div style="padding:9px 11px 8px 16px;background:#1A1A1A;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between">
+            <div>
+              <div style="font-size:20px;font-weight:900;color:#F2EFE8;font-family:var(--mo)">#0187</div>
+              <div style="display:flex;gap:5px;margin-top:2px"><span style="font-size:10px;color:#9A9690">T12</span><span style="background:rgba(228,84,12,.12);color:#E4540C;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:4px;text-transform:uppercase">Dine In</span></div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:22px;font-weight:700;color:#F59E0B;font-family:var(--mo)">18:32</div>
+              <div style="font-size:8px;color:#555;margin-bottom:2px">menit:detik</div>
+              <span style="font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(245,158,11,.12);color:#F59E0B">&gt;10 mnt</span>
+            </div>
+          </div>
+          <div style="padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:6px 8px;display:flex;gap:6px">
+              <div style="width:20px;height:20px;border-radius:5px;background:#F59E0B;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0">1</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#F2EFE8">Sop Buntut</div>
+                <span style="background:rgba(34,197,94,.1);color:#22C55E;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-top:3px;display:inline-block">+Extra Kuah</span>
+              </div>
+            </div>
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:6px 8px;display:flex;gap:6px">
+              <div style="width:20px;height:20px;border-radius:5px;background:#F59E0B;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0">2</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#F2EFE8">Es Krim Cokelat</div>
+                <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:3px">
+                  <span style="background:rgba(228,84,12,.1);color:#E4540C;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700">Oreo</span>
+                  <span style="background:rgba(34,197,94,.1);color:#22C55E;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700">+Extra Scoop</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:7px 10px 9px;border-top:1px solid rgba(255,255,255,.05);background:#1A1A1A;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:10px;color:#555">Kasir: Citra</span>
+            <div style="width:140px;height:32px;border-radius:16px;background:#1F1F1F;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;position:relative;overflow:hidden">
+              <div style="position:absolute;width:26px;height:26px;border-radius:13px;background:#F59E0B;left:3px;display:flex;align-items:center;justify-content:center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <span style="font-size:9.5px;font-weight:700;color:#555;width:100%;text-align:center">Swipe &#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FRESH card -->
+        <div style="background:#141414;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;position:relative">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:#22C55E;border-radius:12px 0 0 12px"></div>
+          <div style="padding:9px 11px 8px 16px;background:#1A1A1A;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between">
+            <div>
+              <div style="font-size:20px;font-weight:900;color:#F2EFE8;font-family:var(--mo)">#0191</div>
+              <div style="display:flex;gap:5px;margin-top:2px"><span style="font-size:10px;color:#9A9690">GoFood</span><span style="background:rgba(227,23,91,.12);color:#E3175B;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:4px;text-transform:uppercase">GoFood</span></div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:22px;font-weight:700;color:#22C55E;font-family:var(--mo)">07:12</div>
+              <div style="font-size:8px;color:#555;margin-bottom:2px">menit:detik</div>
+              <span style="font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.12);color:#22C55E">On time</span>
+            </div>
+          </div>
+          <div style="padding:7px 10px;display:flex;flex-direction:column;gap:4px">
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:6px 8px;display:flex;gap:6px">
+              <div style="width:20px;height:20px;border-radius:5px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0">2</div>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#F2EFE8">Ayam Geprek</div>
+                <div style="margin-top:3px;padding:3px 6px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.22);border-radius:5px;font-size:10px;font-weight:700;color:#F59E0B">&#9888; Extra pedas beneran</div>
+              </div>
+            </div>
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:6px 8px;display:flex;gap:6px">
+              <div style="width:20px;height:20px;border-radius:5px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0">2</div>
+              <div><div style="font-size:12px;font-weight:700;color:#F2EFE8">Nasi Putih</div></div>
+            </div>
+          </div>
+          <div style="padding:7px 10px 9px;border-top:1px solid rgba(255,255,255,.05);background:#1A1A1A;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:10px;color:#555">Kasir: Citra</span>
+            <div style="width:140px;height:32px;border-radius:16px;background:#1F1F1F;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;position:relative;overflow:hidden">
+              <div style="position:absolute;width:26px;height:26px;border-radius:13px;background:#22C55E;left:3px;display:flex;align-items:center;justify-content:center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <span style="font-size:9.5px;font-weight:700;color:#555;width:100%;text-align:center">Swipe &#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW HIGHLIGHT card -->
+        <div style="background:#141414;border:2px solid #E4540C;border-radius:12px;overflow:hidden;position:relative;box-shadow:0 0 16px rgba(228,84,12,.28)">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:#22C55E;border-radius:12px 0 0 12px"></div>
+          <div style="padding:9px 11px 8px 16px;background:#1A1A1A;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between">
+            <div>
+              <div style="font-size:20px;font-weight:900;color:#E4540C;font-family:var(--mo)">#0195</div>
+              <div style="display:flex;gap:5px;margin-top:2px">
+                <span style="font-size:10px;color:#9A9690">T09</span>
+                <span style="background:rgba(228,84,12,.12);color:#E4540C;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:4px;text-transform:uppercase">Dine In</span>
+                <span style="background:rgba(228,84,12,.2);color:#E4540C;font-size:8px;font-weight:800;padding:1px 6px;border-radius:4px">NEW</span>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:22px;font-weight:700;color:#22C55E;font-family:var(--mo)">00:18</div>
+              <div style="font-size:8px;color:#555;margin-bottom:2px">menit:detik</div>
+              <span style="font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.12);color:#22C55E">On time</span>
+            </div>
+          </div>
+          <div style="padding:7px 10px">
+            <div style="background:#1A1A1A;border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:6px 8px;display:flex;gap:6px">
+              <div style="width:20px;height:20px;border-radius:5px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0">2</div>
+              <div><div style="font-size:12px;font-weight:700;color:#F2EFE8">Rawon Spesial</div></div>
+            </div>
+          </div>
+          <div style="padding:7px 10px 9px;border-top:1px solid rgba(255,255,255,.05);background:#1A1A1A;display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:10px;color:#555">Kasir: Budi</span>
+            <div style="width:140px;height:32px;border-radius:16px;background:#1F1F1F;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;position:relative;overflow:hidden">
+              <div style="position:absolute;width:26px;height:26px;border-radius:13px;background:#22C55E;left:3px;display:flex;align-items:center;justify-content:center">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+              <span style="font-size:9.5px;font-weight:700;color:#555;width:100%;text-align:center">Swipe &#8594;</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="ann-grid">
+    <div class="ann"><b>Priority Strip:</b> Border kiri 5px: Hijau=Fresh, Kuning=&gt;10 mnt, Merah=&gt;20 mnt. Threshold configurable Backoffice.</div>
+    <div class="ann"><b>Order Number:</b> 20px bold mono. Terlihat dari 2-3 meter. NEW badge + glow oranye 3.5 detik saat baru masuk.</div>
+    <div class="ann"><b>Swipe Complete:</b> Drag thumb ke kanan. Anti-accidental tap. Setelah swipe → POS Notification Overlay muncul.</div>
+    <div class="ann"><b>Kitchen Note:</b> Background kuning, border oranye, ikon &#9888;. Tidak bisa terlewat staf dapur.</div>
+  </div>
+</div>
+
+<!-- KDS POS NOTIFY -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">KDS · 2/3</div>
+  <div class="section-title">POS Notification Overlay</div>
+  <div class="section-sub">Muncul setelah swipe complete. Tidak bisa ditutup tanpa konfirmasi kasir. Memastikan pesanan diserahkan ke pelanggan.</div>
+  <div class="two-col">
+    <div class="wf-frame">
+      <div class="wf-frame-lbl"><div class="dot"></div>KDS — POS Notify Overlay</div>
+      <div style="background:rgba(0,0,0,.78);padding:24px;display:flex;align-items:center;justify-content:center;min-height:360px">
+        <div style="background:#141414;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:28px 30px;text-align:center;width:320px">
+          <div style="width:56px;height:56px;border-radius:50%;background:rgba(34,197,94,.12);border:2px solid rgba(34,197,94,.3);margin:0 auto 14px;display:flex;align-items:center;justify-content:center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div style="font-size:18px;font-weight:900;color:#F2EFE8;margin-bottom:3px">Pesanan Selesai!</div>
+          <div style="font-size:26px;font-weight:900;color:#22C55E;font-family:var(--mo);margin:5px 0">#0190</div>
+          <div style="font-size:11px;color:#9A9690;margin-bottom:10px">TAKE · Kasir: Ani</div>
+          <div style="background:#1A1A1A;border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:10.5px;color:#9A9690;text-align:left;font-family:var(--mo);line-height:1.8;max-height:100px;overflow-y:auto">
+            1&#215; Sate Ayam 10pcs (Mix, +Extra Sate)<br>
+            2&#215; Es Teh Manis<br>
+            &#9888; Tanpa es untuk 1<br>
+            1&#215; French Fries (Keju)
+          </div>
+          <div style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.22);border-radius:7px;padding:7px 12px;margin-bottom:14px;font-size:11px;font-weight:700;color:#F59E0B;display:flex;align-items:center;gap:6px;justify-content:center">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Konfirmasi ke pelanggan dulu
+          </div>
+          <div style="background:#22C55E;border-radius:10px;padding:13px;font-size:13px;font-weight:800;color:#fff;cursor:pointer">&#10003; Pesanan Sudah Diserahkan</div>
+          <div style="margin-top:8px;font-size:10px;color:#555">Overlay tidak bisa ditutup tanpa konfirmasi</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="feat-list" style="margin-bottom:12px">
+        <div class="feat"><div class="feat-ico">B</div><div><div class="feat-name">Cannot Dismiss</div><div class="feat-desc">Hanya tombol konfirmasi yang bisa menutup overlay ini.</div></div></div>
+        <div class="feat"><div class="feat-ico">S</div><div><div class="feat-name">Summary Lengkap</div><div class="feat-desc">Semua item + modifier + catatan. Kasir verifikasi sebelum serahkan.</div></div></div>
+        <div class="feat"><div class="feat-ico">N</div><div><div class="feat-name">Nomor Order Besar</div><div class="feat-desc">Kasir panggil pelanggan by nomor antrian.</div></div></div>
+        <div class="feat"><div class="feat-ico">A</div><div><div class="feat-name">Auto-archive</div><div class="feat-desc">Setelah confirm → order dipindah ke completed list di Backoffice.</div></div></div>
+      </div>
+      <div class="ann"><b>Alur:</b> Staf dapur swipe selesai → overlay muncul → staf panggil kasir → kasir konfirmasi → overlay hilang → order selesai di Firestore.</div>
+    </div>
+  </div>
+</div>
+
+<!-- KDS DAY MODE -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">KDS · 3/3</div>
+  <div class="section-title">Day Mode</div>
+  <div class="section-sub">Toggle Day/Dark mode di topbar kanan. Day mode untuk dapur terang siang hari. Urgency colors tetap sama, hanya background berubah.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>KDS — Day Mode (Light Background)</div>
+    <div style="background:#F0EDE8;display:flex;flex-direction:column;min-height:200px">
+      <div style="height:50px;background:#FFFFFF;border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;padding:0 18px;gap:12px">
+        <div style="width:28px;height:28px;border-radius:7px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff">N</div>
+        <div><div style="font-size:12px;font-weight:700;color:#1C1814">NASHTY OS</div><div style="font-size:9px;color:#A09890;letter-spacing:.08em;text-transform:uppercase">Kitchen Display</div></div>
+        <div style="display:flex;gap:8px;margin-left:0">
+          <div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.09);border-radius:7px;padding:4px 10px;text-align:center"><div style="font-size:15px;font-weight:900;color:#1C1814;font-family:var(--mo);line-height:1">6</div><div style="font-size:8px;color:#A09890;text-transform:uppercase;letter-spacing:.06em">Orders</div></div>
+          <div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:7px;padding:4px 10px;text-align:center"><div style="font-size:15px;font-weight:900;color:#EF4444;font-family:var(--mo);line-height:1">2</div><div style="font-size:8px;color:#A09890;text-transform:uppercase;letter-spacing:.06em">Urgent</div></div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <div style="background:rgba(228,84,12,.1);border:1px solid rgba(228,84,12,.2);border-radius:6px;padding:4px 9px;font-size:11px;color:#E4540C;font-weight:700;cursor:pointer">&#9790; Dark</div>
+          <div style="font-size:16px;font-weight:500;color:#1C1814;font-family:var(--mo)">14:32:18</div>
+        </div>
+      </div>
+      <div style="padding:12px 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <!-- Urgent day -->
+        <div style="background:#FFFFFF;border:1.5px solid rgba(239,68,68,.4);border-radius:11px;overflow:hidden;position:relative">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:#EF4444;border-radius:11px 0 0 11px"></div>
+          <div style="padding:8px 10px 7px 15px;background:#FAF7F2;border-bottom:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between">
+            <div><div style="font-size:18px;font-weight:900;color:#1C1814;font-family:var(--mo)">#0190</div><div style="font-size:10px;color:#6B6459">TAKE</div></div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;color:#EF4444;font-family:var(--mo)">23:37</div><span style="font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(239,68,68,.1);color:#EF4444">&gt;20 mnt</span></div>
+          </div>
+          <div style="padding:8px 10px 10px 14px"><div style="background:#F4F1EC;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:600;color:#6B6459">3 items · note: Tanpa es untuk 1</div></div>
+        </div>
+        <!-- Warn day -->
+        <div style="background:#FFFFFF;border:1.5px solid rgba(245,158,11,.35);border-radius:11px;overflow:hidden;position:relative">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:#F59E0B;border-radius:11px 0 0 11px"></div>
+          <div style="padding:8px 10px 7px 15px;background:#FAF7F2;border-bottom:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between">
+            <div><div style="font-size:18px;font-weight:900;color:#1C1814;font-family:var(--mo)">#0187</div><div style="font-size:10px;color:#6B6459">T12 · Dine In</div></div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;color:#F59E0B;font-family:var(--mo)">18:32</div><span style="font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(245,158,11,.1);color:#D97706">&gt;10 mnt</span></div>
+          </div>
+          <div style="padding:8px 10px 10px 14px"><div style="background:#F4F1EC;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:600;color:#6B6459">2 items</div></div>
+        </div>
+        <!-- Fresh day -->
+        <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.09);border-radius:11px;overflow:hidden;position:relative">
+          <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:#22C55E;border-radius:11px 0 0 11px"></div>
+          <div style="padding:8px 10px 7px 15px;background:#FAF7F2;border-bottom:1px solid rgba(0,0,0,.07);display:flex;justify-content:space-between">
+            <div><div style="font-size:18px;font-weight:900;color:#1C1814;font-family:var(--mo)">#0195</div><div style="font-size:10px;color:#6B6459">T09 · Dine In · NEW</div></div>
+            <div style="text-align:right"><div style="font-size:20px;font-weight:700;color:#22C55E;font-family:var(--mo)">00:18</div><span style="font-size:8.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.1);color:#16A34A">On time</span></div>
+          </div>
+          <div style="padding:8px 10px 10px 14px"><div style="background:#F4F1EC;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:600;color:#6B6459">2 items</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann-grid">
+    <div class="ann"><b>Day Mode:</b> Background berubah ke warm white (#F0EDE8). Urgency colors (merah/kuning/hijau) identik dengan dark mode.</div>
+    <div class="ann"><b>Default Mode:</b> Dark mode adalah default. Backoffice bisa set default per outlet atau auto berdasarkan jam.</div>
+  </div>
+</div>
+
+<!-- ═══ BACKOFFICE ═══ -->
+<div class="page-divider" id="sec-bo">
+  <div><div class="pd-title">Backoffice</div><div class="pd-sub">Manager &amp; Owner · Desktop Web · Light Mode Default</div></div>
+  <div class="pd-num">03</div>
+</div>
+
+<!-- BO DASHBOARD -->
+<div class="section">
+  <div class="section-lbl">Backoffice · Layout &amp; Dashboard</div>
+  <div class="section-title">Sidebar Nav &amp; Dashboard</div>
+  <div class="section-sub">SPA fixed sidebar. 19 halaman. Dashboard: KPI hari ini, revenue chart 7 hari, top produk, metode bayar.</div>
+  <div class="wf-frame">
+    <div class="wf-frame-lbl"><div class="dot"></div>Backoffice — Dashboard · 1440px</div>
+    <div style="display:flex;height:500px;background:#F4F1EC;overflow:hidden">
+      <!-- Sidebar -->
+      <div style="width:214px;flex-shrink:0;background:#FFFFFF;border-right:1px solid rgba(0,0,0,.08);display:flex;flex-direction:column;overflow-y:auto">
+        <div style="padding:13px 14px 10px;border-bottom:1px solid rgba(0,0,0,.07);display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:7px;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff">N</div>
+          <div><div style="font-size:12px;font-weight:800;color:#1C1814">NASHTY OS</div><div style="font-size:9px;color:#A09890;text-transform:uppercase;letter-spacing:.08em">Backoffice</div></div>
+        </div>
+        <div style="margin:7px 8px;background:#F4F1EC;border:1px solid rgba(0,0,0,.08);border-radius:7px;padding:6px 9px">
+          <div style="font-size:11.5px;font-weight:700;color:#1C1814">Galaxy Mall</div>
+          <div style="font-size:9.5px;color:#A09890">Outlet aktif &#8964;</div>
+        </div>
+        <!-- Nav groups -->
+        <div style="padding:9px 8px 2px;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.1em">Utama</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;background:rgba(228,84,12,.07);cursor:pointer">
+          <div style="width:22px;height:22px;border-radius:5px;background:rgba(228,84,12,.12);display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#E4540C" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <span style="font-size:11.5px;font-weight:700;color:#E4540C">Dashboard</span>
+        </div>
+        <div style="padding:9px 8px 2px;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.1em">Menu</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Kategori</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Produk</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Modifier Groups</span></div>
+        <div style="padding:9px 8px 2px;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.1em">POS</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Pengaturan Umum</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Metode Pembayaran</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Pengaturan Struk</span></div>
+        <div style="padding:9px 8px 2px;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.1em">KDS</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Workflow Status</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Production Time</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Alert Settings</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">KDS Analytics</span></div>
+        <div style="padding:9px 8px 2px;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.1em">Tim</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Owners</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Managers</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Kasir</span></div>
+        <div style="padding:9px 8px 2px;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.1em">Bisnis</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Outlets</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Laporan</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Menu Engineering</span></div>
+        <div style="padding:9px 8px 2px;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.1em">Sistem</div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 1px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Pengaturan</span></div>
+        <div style="display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:7px;margin:0 3px 4px;cursor:pointer"><div style="width:22px;height:22px;border-radius:5px"></div><span style="font-size:11.5px;font-weight:500;color:#6B6459">Activity Logs</span></div>
+      </div>
+      <!-- Main content -->
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+        <!-- Topbar -->
+        <div style="height:50px;background:#FFFFFF;border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;padding:0 20px;gap:10px;flex-shrink:0">
+          <div><div style="font-size:15px;font-weight:800;color:#1C1814">Dashboard</div><div style="font-size:10.5px;color:#A09890">Nashty OS &#8250; Dashboard</div></div>
+          <div style="margin-left:auto;display:flex;gap:7px;align-items:center">
+            <div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.09);border-radius:7px;padding:4px 10px;font-size:11.5px;color:#6B6459;cursor:pointer">&#9790; Dark</div>
+            <div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.09);border-radius:7px;padding:4px 10px;font-size:11.5px;color:#6B6459;cursor:pointer">&#128507; Galaxy Mall</div>
+            <div style="width:30px;height:30px;border-radius:50%;background:#E4540C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff">AD</div>
+          </div>
+        </div>
+        <!-- Dashboard content -->
+        <div style="flex:1;overflow-y:auto;padding:16px 18px">
+          <!-- KPI row -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;padding:13px 14px;position:relative;overflow:hidden">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#E4540C;border-radius:11px 11px 0 0"></div>
+              <div style="font-size:9.5px;font-weight:700;color:#A09890;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Pendapatan Hari Ini</div>
+              <div style="font-size:21px;font-weight:800;color:#1C1814;font-family:var(--mo)">4,28jt</div>
+              <div style="font-size:10px;color:#A09890;margin-top:2px">&#8593; 12% vs kemarin</div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;padding:13px 14px;position:relative;overflow:hidden">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#22C55E;border-radius:11px 11px 0 0"></div>
+              <div style="font-size:9.5px;font-weight:700;color:#A09890;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Bulan Ini</div>
+              <div style="font-size:21px;font-weight:800;color:#1C1814;font-family:var(--mo)">89,4jt</div>
+              <div style="font-size:10px;color:#A09890;margin-top:2px">&#8593; 8% vs bulan lalu</div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;padding:13px 14px;position:relative;overflow:hidden">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#3B82F6;border-radius:11px 11px 0 0"></div>
+              <div style="font-size:9.5px;font-weight:700;color:#A09890;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Transaksi</div>
+              <div style="font-size:21px;font-weight:800;color:#1C1814;font-family:var(--mo)">187</div>
+              <div style="font-size:10px;color:#A09890;margin-top:2px">5 void · 2 refund</div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;padding:13px 14px;position:relative;overflow:hidden">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#7C3AED;border-radius:11px 11px 0 0"></div>
+              <div style="font-size:9.5px;font-weight:700;color:#A09890;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Avg Order</div>
+              <div style="font-size:21px;font-weight:800;color:#1C1814;font-family:var(--mo)">22,9rb</div>
+              <div style="font-size:10px;color:#A09890;margin-top:2px">&#8595; 3% vs kemarin</div>
+            </div>
+          </div>
+          <!-- Chart + Quick Actions -->
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:12px">
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;padding:13px">
+              <div style="font-size:12px;font-weight:700;color:#1C1814;margin-bottom:10px">Pendapatan 7 Hari Terakhir</div>
+              <div style="display:flex;align-items:flex-end;gap:5px;height:72px" id="chart-bars">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;background:rgba(228,84,12,.22);border-radius:3px 3px 0 0;height:24px"></div><div style="font-size:8px;color:#A09890">S</div></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;background:rgba(228,84,12,.22);border-radius:3px 3px 0 0;height:30px"></div><div style="font-size:8px;color:#A09890">S</div></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;background:rgba(228,84,12,.22);border-radius:3px 3px 0 0;height:22px"></div><div style="font-size:8px;color:#A09890">R</div></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;background:rgba(228,84,12,.22);border-radius:3px 3px 0 0;height:36px"></div><div style="font-size:8px;color:#A09890">K</div></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;background:rgba(228,84,12,.22);border-radius:3px 3px 0 0;height:44px"></div><div style="font-size:8px;color:#A09890">J</div></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;background:rgba(228,84,12,.22);border-radius:3px 3px 0 0;height:52px"></div><div style="font-size:8px;color:#A09890">S</div></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><div style="width:100%;background:#E4540C;border-radius:3px 3px 0 0;height:64px"></div><div style="font-size:8px;color:#A09890;font-weight:700">M</div></div>
+              </div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;padding:13px">
+              <div style="font-size:12px;font-weight:700;color:#1C1814;margin-bottom:10px">Quick Actions</div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="padding:6px 10px;border-radius:7px;background:#E4540C;font-size:11px;font-weight:700;color:#fff;cursor:pointer;text-align:center">+ Tambah Produk</div>
+                <div style="padding:6px 10px;border-radius:7px;background:#F4F1EC;border:1px solid rgba(0,0,0,.08);font-size:11px;font-weight:600;color:#6B6459;cursor:pointer;text-align:center">+ Tambah Kategori</div>
+                <div style="padding:6px 10px;border-radius:7px;background:#F4F1EC;border:1px solid rgba(0,0,0,.08);font-size:11px;font-weight:600;color:#6B6459;cursor:pointer;text-align:center">+ Tambah Kasir</div>
+                <div style="padding:6px 10px;border-radius:7px;background:#F4F1EC;border:1px solid rgba(0,0,0,.08);font-size:11px;font-weight:600;color:#6B6459;cursor:pointer;text-align:center">&#127873; Buat Promosi</div>
+              </div>
+            </div>
+          </div>
+          <!-- Top products + Payment methods -->
+          <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;overflow:hidden">
+              <div style="padding:10px 13px;border-bottom:1px solid rgba(0,0,0,.06);font-size:12px;font-weight:700;color:#1C1814">Top 5 Produk</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 13px;border-bottom:1px solid rgba(0,0,0,.04)">
+                <span style="width:17px;height:17px;border-radius:50%;background:#F59E0B;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</span>
+                <span style="flex:1;font-size:11.5px;font-weight:600;color:#1C1814">Ayam Bakar Madu</span>
+                <span style="font-size:10px;color:#A09890">58</span>
+                <span style="font-size:10.5px;font-family:var(--mo);color:#1C1814">Rp 3.190.000</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 13px;border-bottom:1px solid rgba(0,0,0,.04)">
+                <span style="width:17px;height:17px;border-radius:50%;background:#9CA3AF;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</span>
+                <span style="flex:1;font-size:11.5px;font-weight:600;color:#1C1814">Nasi Goreng Spesial</span>
+                <span style="font-size:10px;color:#A09890">51</span>
+                <span style="font-size:10.5px;font-family:var(--mo);color:#1C1814">Rp 1.785.000</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 13px;border-bottom:1px solid rgba(0,0,0,.04)">
+                <span style="width:17px;height:17px;border-radius:50%;background:#CD7C3F;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span>
+                <span style="flex:1;font-size:11.5px;font-weight:600;color:#1C1814">Kopi Susu Aren</span>
+                <span style="font-size:10px;color:#A09890">47</span>
+                <span style="font-size:10.5px;font-family:var(--mo);color:#1C1814">Rp 1.034.000</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 13px">
+                <span style="width:17px;height:17px;border-radius:50%;background:#E8E2D9;color:#A09890;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</span>
+                <span style="flex:1;font-size:11.5px;font-weight:600;color:#1C1814">Rawon Spesial</span>
+                <span style="font-size:10px;color:#A09890">38</span>
+                <span style="font-size:10.5px;font-family:var(--mo);color:#1C1814">Rp 1.596.000</span>
+              </div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:11px;overflow:hidden">
+              <div style="padding:10px 13px;border-bottom:1px solid rgba(0,0,0,.06);font-size:12px;font-weight:700;color:#1C1814">Metode Pembayaran</div>
+              <div style="padding:10px 13px;display:flex;flex-direction:column;gap:6px">
+                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-size:10.5px;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#22C55E;display:inline-block"></span>Tunai</span><span style="font-size:10px;color:#A09890">29%</span></div><div style="height:4px;background:#EDE9E2;border-radius:2px"><div style="height:100%;width:29%;background:#22C55E;border-radius:2px"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-size:10.5px;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#3B82F6;display:inline-block"></span>QRIS</span><span style="font-size:10px;color:#A09890">23%</span></div><div style="height:4px;background:#EDE9E2;border-radius:2px"><div style="height:100%;width:23%;background:#3B82F6;border-radius:2px"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-size:10.5px;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#00B14F;display:inline-block"></span>GrabFood</span><span style="font-size:10px;color:#A09890">17%</span></div><div style="height:4px;background:#EDE9E2;border-radius:2px"><div style="height:100%;width:17%;background:#00B14F;border-radius:2px"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-size:10.5px;display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:50%;background:#1E40AF;display:inline-block"></span>BCA</span><span style="font-size:10px;color:#A09890">14%</span></div><div style="height:4px;background:#EDE9E2;border-radius:2px"><div style="height:100%;width:14%;background:#1E40AF;border-radius:2px"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BO PRODUK TABLE -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">Backoffice · Menu Management</div>
+  <div class="section-title">Produk &amp; Modal Edit</div>
+  <div class="section-sub">Tabel produk dengan search, filter kategori, aksi edit/duplikat/arsip. Modal produk: foto upload, modifier assignment, outlet availability.</div>
+  <div class="two-col">
+    <div class="wf-frame">
+      <div class="wf-frame-lbl"><div class="dot"></div>Backoffice — Tabel Produk</div>
+      <div style="background:#F4F1EC;padding:12px">
+        <div style="display:flex;gap:7px;margin-bottom:11px;align-items:center">
+          <div style="flex:1;background:#FFFFFF;border:1px solid rgba(0,0,0,.1);border-radius:7px;height:30px;display:flex;align-items:center;padding:0 9px;gap:5px"><span style="font-size:10.5px;color:#A09890">&#128269; Cari produk...</span></div>
+          <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.1);border-radius:7px;height:30px;padding:0 9px;display:flex;align-items:center;font-size:11px;color:#6B6459">Semua Kategori &#8964;</div>
+          <div style="background:#E4540C;border-radius:7px;height:30px;padding:0 11px;display:flex;align-items:center;font-size:11px;font-weight:700;color:#fff;cursor:pointer">+ Produk</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:9px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:2fr 70px 80px 65px 90px 70px;padding:7px 12px;background:#F4F1EC;border-bottom:1px solid rgba(0,0,0,.06)">
+            <div style="font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.07em">Produk</div>
+            <div style="font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.07em">Kategori</div>
+            <div style="font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.07em">Harga</div>
+            <div style="font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.07em">Status</div>
+            <div style="font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.07em">Outlet</div>
+            <div style="font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.07em">Aksi</div>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 70px 80px 65px 90px 70px;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);align-items:center">
+            <div><div style="font-size:11.5px;font-weight:700;color:#1C1814">Ayam Bakar Madu</div><div style="font-size:10px;color:#A09890">Bumbu kacang</div></div>
+            <div style="font-size:10px;background:#F0EDE8;border-radius:4px;padding:2px 6px;display:inline-block;font-weight:600;color:#6B6459">Makanan</div>
+            <div style="font-size:10.5px;color:#1C1814;font-family:var(--mo)">Rp 55.000</div>
+            <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.08);color:#16A34A;display:inline">Aktif</div>
+            <div style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;background:rgba(37,99,235,.08);color:#2563EB;display:inline">Galaxy Mall</div>
+            <div style="display:flex;gap:3px">
+              <div style="background:#F0EDE8;border:1px solid rgba(0,0,0,.07);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></div>
+              <div style="background:#F0EDE8;border:1px solid rgba(0,0,0,.07);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+              <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.14);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 70px 80px 65px 90px 70px;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04);align-items:center">
+            <div><div style="font-size:11.5px;font-weight:700;color:#1C1814">Kopi Susu Aren</div><div style="font-size:10px;color:#A09890">Cold brew</div></div>
+            <div style="font-size:10px;background:#F0EDE8;border-radius:4px;padding:2px 6px;display:inline-block;font-weight:600;color:#6B6459">Minuman</div>
+            <div style="font-size:10.5px;color:#1C1814;font-family:var(--mo)">Rp 22.000</div>
+            <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.08);color:#16A34A;display:inline">Aktif</div>
+            <div style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;background:rgba(37,99,235,.08);color:#2563EB;display:inline">Galaxy Mall</div>
+            <div style="display:flex;gap:3px">
+              <div style="background:#F0EDE8;border:1px solid rgba(0,0,0,.07);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></div>
+              <div style="background:#F0EDE8;border:1px solid rgba(0,0,0,.07);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+              <div style="background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.14);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 70px 80px 65px 90px 70px;padding:8px 12px;align-items:center;opacity:.6">
+            <div><div style="font-size:11.5px;font-weight:700;color:#1C1814">Ayam Geprek</div><div style="font-size:10px;color:#A09890">Crispy</div></div>
+            <div style="font-size:10px;background:#F0EDE8;border-radius:4px;padding:2px 6px;display:inline-block;font-weight:600;color:#6B6459">Makanan</div>
+            <div style="font-size:10.5px;color:#1C1814;font-family:var(--mo)">Rp 38.000</div>
+            <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(239,68,68,.08);color:#DC2626;display:inline">Nonaktif</div>
+            <div style="font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;background:rgba(37,99,235,.08);color:#2563EB;display:inline">Galaxy Mall</div>
+            <div style="display:flex;gap:3px">
+              <div style="background:#F0EDE8;border:1px solid rgba(0,0,0,.07);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></div>
+              <div style="background:#F0EDE8;border:1px solid rgba(0,0,0,.07);border-radius:4px;width:22px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#6B6459" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wf-frame">
+      <div class="wf-frame-lbl"><div class="dot"></div>Modal Edit Produk</div>
+      <div style="background:rgba(0,0,0,.25);padding:14px;display:flex;align-items:flex-start;justify-content:center;min-height:400px">
+        <div style="background:#FFFFFF;border-radius:13px;overflow:hidden;width:100%">
+          <div style="padding:13px 16px;border-bottom:1px solid rgba(0,0,0,.08);display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:13px;font-weight:800;color:#1C1814">Edit Produk</div>
+            <div style="font-size:15px;color:#A09890;cursor:pointer">&#10005;</div>
+          </div>
+          <div style="padding:12px 16px;display:flex;flex-direction:column;gap:9px;max-height:330px;overflow-y:auto">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+              <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:3px">Nama Produk</div><div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:6px 9px;font-size:11.5px;color:#1C1814">Ayam Bakar Madu</div></div>
+              <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:3px">Kategori</div><div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:6px 9px;font-size:11.5px;color:#1C1814">Makanan &#8964;</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+              <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:3px">Harga</div><div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:6px 9px;font-size:11.5px;color:#1C1814">55000</div></div>
+              <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:3px">Status</div><div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:6px 9px;font-size:11.5px;color:#1C1814">Aktif &#8964;</div></div>
+            </div>
+            <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:3px">Foto Produk</div>
+              <div style="border:2px dashed rgba(0,0,0,.13);border-radius:7px;padding:14px;text-align:center;cursor:pointer">
+                <div style="font-size:18px;opacity:.3;margin-bottom:3px">&#128247;</div>
+                <div style="font-size:10.5px;font-weight:600;color:#6B6459">Klik untuk upload</div>
+                <div style="font-size:9.5px;color:#A09890;margin-top:1px">JPG, PNG · Maks 2MB</div>
+              </div>
+            </div>
+            <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:4px">Modifier Groups</div>
+              <div style="display:flex;flex-direction:column;gap:3px">
+                <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:#F4F1EC;border-radius:6px">
+                  <div style="width:13px;height:13px;border-radius:3px;background:#E4540C;border:1.5px solid #E4540C;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <span style="font-size:11px;font-weight:600;color:#1C1814;flex:1">Level Pedas</span>
+                  <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:rgba(0,0,0,.05);color:#A09890">Pilih 1</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:#F4F1EC;border-radius:6px">
+                  <div style="width:13px;height:13px;border-radius:3px;background:#E4540C;border:1.5px solid #E4540C;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                  <span style="font-size:11px;font-weight:600;color:#1C1814;flex:1">Variasi Add-on</span>
+                  <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:rgba(0,0,0,.05);color:#A09890">Multi</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:#F4F1EC;border-radius:6px">
+                  <div style="width:13px;height:13px;border-radius:3px;border:1.5px solid rgba(0,0,0,.18);flex-shrink:0"></div>
+                  <span style="font-size:11px;color:#A09890;flex:1">Suhu Minuman</span>
+                  <span style="font-size:9px;padding:1px 6px;border-radius:3px;background:rgba(0,0,0,.05);color:#A09890">Pilih 1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:10px 16px;border-top:1px solid rgba(0,0,0,.07);display:flex;justify-content:flex-end;gap:6px">
+            <div style="padding:6px 12px;border-radius:6px;border:1px solid rgba(0,0,0,.1);font-size:11.5px;font-weight:600;color:#6B6459;cursor:pointer">Batal</div>
+            <div style="padding:6px 12px;border-radius:6px;background:#E4540C;font-size:11.5px;font-weight:700;color:#fff;cursor:pointer">Simpan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BO LAPORAN & MENU ENGINEERING -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">Backoffice · Analytics</div>
+  <div class="section-title">Laporan &amp; Menu Engineering</div>
+  <div class="section-sub">Laporan 5 sub-tab. Menu Engineering matrix Stars/Plowhorses/Puzzles/Dogs per item.</div>
+  <div class="two-col">
+    <div class="wf-frame">
+      <div class="wf-frame-lbl"><div class="dot"></div>Laporan — 5 Sub-tabs</div>
+      <div style="background:#F4F1EC;padding:12px;min-height:300px">
+        <div style="display:flex;border-bottom:1px solid rgba(0,0,0,.08);margin-bottom:12px;overflow-x:auto">
+          <div style="padding:7px 12px;font-size:11px;font-weight:700;color:#E4540C;border-bottom:2px solid #E4540C;white-space:nowrap;cursor:pointer">Ringkasan</div>
+          <div style="padding:7px 12px;font-size:11px;font-weight:600;color:#A09890;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer">Item Sales</div>
+          <div style="padding:7px 12px;font-size:11px;font-weight:600;color:#A09890;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer">Category Sales</div>
+          <div style="padding:7px 12px;font-size:11px;font-weight:600;color:#A09890;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer">Modifier Sales</div>
+          <div style="padding:7px 12px;font-size:11px;font-weight:600;color:#A09890;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer">Pajak &amp; Biaya</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:9px;overflow:hidden">
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04)"><span style="font-size:11px;color:#6B6459">Gross Sales</span><span style="font-size:11px;font-family:var(--mo);color:#1C1814">Rp 89.403.500</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04)"><span style="font-size:11px;color:#6B6459">Diskon</span><span style="font-size:11px;font-family:var(--mo);color:#A09890">(Rp 2.240.000)</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04)"><span style="font-size:11px;color:#6B6459">Refund</span><span style="font-size:11px;font-family:var(--mo);color:#A09890">(Rp 1.189.500)</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 12px;border-bottom:1px solid rgba(0,0,0,.04);background:#F8F5F0"><span style="font-size:11.5px;font-weight:700;color:#1C1814">Net Sales</span><span style="font-size:11.5px;font-weight:700;font-family:var(--mo);color:#1C1814">Rp 85.974.000</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04)"><span style="font-size:11px;color:#6B6459">Pajak (11%)</span><span style="font-size:11px;font-family:var(--mo);color:#1C1814">Rp 9.457.140</span></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(0,0,0,.04)"><span style="font-size:11px;color:#6B6459">Service (5%)</span><span style="font-size:11px;font-family:var(--mo);color:#1C1814">Rp 4.298.700</span></div>
+          <div style="display:flex;justify-content:space-between;padding:9px 12px;background:#F8F5F0"><span style="font-size:12px;font-weight:900;color:#1C1814">Total Collected</span><span style="font-size:13px;font-weight:900;font-family:var(--mo);color:#E4540C">Rp 85.974.000</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-frame">
+      <div class="wf-frame-lbl"><div class="dot"></div>Menu Engineering — Matrix</div>
+      <div style="background:#F4F1EC;padding:12px;min-height:300px">
+        <div style="display:flex;border-bottom:1px solid rgba(0,0,0,.08);margin-bottom:11px">
+          <div style="padding:7px 11px;font-size:11px;font-weight:700;color:#E4540C;border-bottom:2px solid #E4540C;white-space:nowrap;cursor:pointer">Item Analysis</div>
+          <div style="padding:7px 11px;font-size:11px;font-weight:600;color:#A09890;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer">Category Analysis</div>
+          <div style="padding:7px 11px;font-size:11px;font-weight:600;color:#A09890;border-bottom:2px solid transparent;white-space:nowrap;cursor:pointer">Add-on Analysis</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:11px">
+          <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.07);border-radius:8px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:900;color:#22C55E">5</div><div style="font-size:9px;font-weight:700;color:#22C55E">Stars</div></div>
+          <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.07);border-radius:8px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:900;color:#3B82F6">3</div><div style="font-size:9px;font-weight:700;color:#3B82F6">Plowhorses</div></div>
+          <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.07);border-radius:8px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:900;color:#F59E0B">4</div><div style="font-size:9px;font-weight:700;color:#F59E0B">Puzzles</div></div>
+          <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.07);border-radius:8px;padding:8px;text-align:center"><div style="font-size:18px;font-weight:900;color:#EF4444">3</div><div style="font-size:9px;font-weight:700;color:#EF4444">Dogs</div></div>
+        </div>
+        <!-- Quadrant matrix -->
+        <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:10px;margin-bottom:10px">
+          <div style="font-size:10px;font-weight:700;color:#1C1814;margin-bottom:7px">Popularitas vs Margin</div>
+          <div style="position:relative;height:90px;background:#F8F5F0;border-radius:6px;overflow:hidden">
+            <div style="position:absolute;top:4px;left:4px;font-size:8px;font-weight:700;color:rgba(245,158,11,.65)">PUZZLE</div>
+            <div style="position:absolute;top:4px;right:4px;font-size:8px;font-weight:700;color:rgba(34,197,94,.65)">STAR</div>
+            <div style="position:absolute;bottom:4px;left:4px;font-size:8px;font-weight:700;color:rgba(239,68,68,.55)">DOG</div>
+            <div style="position:absolute;bottom:4px;right:4px;font-size:8px;font-weight:700;color:rgba(59,130,246,.55)">PLOWHORSE</div>
+            <div style="position:absolute;top:0;left:50%;bottom:0;width:1px;background:rgba(0,0,0,.1)"></div>
+            <div style="position:absolute;left:0;top:50%;right:0;height:1px;background:rgba(0,0,0,.1)"></div>
+            <div style="position:absolute;left:65%;top:22%;width:11px;height:11px;border-radius:50%;background:#22C55E;opacity:.8;transform:translate(-50%,-50%)"></div>
+            <div style="position:absolute;left:72%;top:28%;width:9px;height:9px;border-radius:50%;background:#22C55E;opacity:.75;transform:translate(-50%,-50%)"></div>
+            <div style="position:absolute;left:78%;top:32%;width:13px;height:13px;border-radius:50%;background:#3B82F6;opacity:.75;transform:translate(-50%,-50%)"></div>
+            <div style="position:absolute;left:28%;top:22%;width:10px;height:10px;border-radius:50%;background:#F59E0B;opacity:.75;transform:translate(-50%,-50%)"></div>
+            <div style="position:absolute;left:22%;top:70%;width:8px;height:8px;border-radius:50%;background:#EF4444;opacity:.7;transform:translate(-50%,-50%)"></div>
+          </div>
+        </div>
+        <!-- Table -->
+        <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:8px;overflow:hidden">
+          <div style="display:grid;grid-template-columns:1fr 55px 55px 70px;padding:6px 10px;background:#F4F1EC;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.07em">
+            <div>Item</div><div>Margin</div><div>Qty</div><div>Klasifikasi</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 55px 55px 70px;padding:7px 10px;border-top:1px solid rgba(0,0,0,.04);align-items:center">
+            <div style="font-size:10.5px;font-weight:600;color:#1C1814">Ayam Bakar Madu</div>
+            <div style="font-size:10px;font-family:var(--mo);color:#6B6459">67%</div>
+            <div style="font-size:10px;color:#6B6459">1892</div>
+            <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(34,197,94,.1);color:#22C55E;display:inline">Star</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 55px 55px 70px;padding:7px 10px;border-top:1px solid rgba(0,0,0,.04);align-items:center">
+            <div style="font-size:10.5px;font-weight:600;color:#1C1814">Rawon Spesial</div>
+            <div style="font-size:10px;font-family:var(--mo);color:#6B6459">38%</div>
+            <div style="font-size:10px;color:#6B6459">984</div>
+            <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(59,130,246,.1);color:#3B82F6;display:inline">Plowhorse</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 55px 55px 70px;padding:7px 10px;border-top:1px solid rgba(0,0,0,.04);align-items:center">
+            <div style="font-size:10.5px;font-weight:600;color:#1C1814">Ayam Geprek</div>
+            <div style="font-size:10px;font-family:var(--mo);color:#6B6459">37%</div>
+            <div style="font-size:10px;color:#6B6459">201</div>
+            <div style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(239,68,68,.1);color:#EF4444;display:inline">Dog</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BO KDS SETTINGS -->
+<div class="section" style="padding-top:36px">
+  <div class="section-lbl">Backoffice · KDS Config</div>
+  <div class="section-title">KDS Settings — Production Time &amp; Alert</div>
+  <div class="section-sub">Semua konfigurasi KDS dikontrol dari Backoffice. POS dan KDS tidak bisa mengubah threshold sendiri.</div>
+  <div class="wf-frame" style="margin-bottom:0">
+    <div class="wf-frame-lbl"><div class="dot"></div>Backoffice — KDS Settings</div>
+    <div style="background:#F4F1EC;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <!-- Production Time -->
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:10px;overflow:hidden">
+        <div style="padding:10px 13px;border-bottom:1px solid rgba(0,0,0,.07);font-size:12px;font-weight:700;color:#1C1814;display:flex;justify-content:space-between;align-items:center">
+          Production Time Rules
+          <div style="padding:3px 9px;background:#E4540C;border-radius:5px;font-size:10px;font-weight:700;color:#fff;cursor:pointer">+ Aturan</div>
+        </div>
+        <div style="overflow:hidden">
+          <div style="display:grid;grid-template-columns:80px 75px 65px 65px 65px;padding:6px 13px;background:#F8F5F0;font-size:9px;font-weight:800;color:#A09890;text-transform:uppercase;letter-spacing:.06em">
+            <div>Kategori</div><div>Target</div><div>On Time</div><div>Warning</div><div>Overdue</div>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 75px 65px 65px 65px;padding:8px 13px;border-top:1px solid rgba(0,0,0,.04);align-items:center">
+            <div style="font-size:11px;font-weight:600;color:#1C1814">Makanan</div>
+            <div style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:rgba(37,99,235,.08);color:#2563EB;display:inline;font-family:var(--mo)">12 mnt</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(34,197,94,.08);color:#16A34A">0-10m</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.08);color:#D97706">10-12m</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(239,68,68,.08);color:#DC2626">&gt;12m</div>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 75px 65px 65px 65px;padding:8px 13px;border-top:1px solid rgba(0,0,0,.04);align-items:center">
+            <div style="font-size:11px;font-weight:600;color:#1C1814">Minuman</div>
+            <div style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:rgba(37,99,235,.08);color:#2563EB;display:inline;font-family:var(--mo)">3 mnt</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(34,197,94,.08);color:#16A34A">0-2m</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.08);color:#D97706">2-3m</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(239,68,68,.08);color:#DC2626">&gt;3m</div>
+          </div>
+          <div style="display:grid;grid-template-columns:80px 75px 65px 65px 65px;padding:8px 13px;border-top:1px solid rgba(0,0,0,.04);align-items:center">
+            <div style="font-size:11px;font-weight:600;color:#1C1814">Dessert</div>
+            <div style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:rgba(37,99,235,.08);color:#2563EB;display:inline;font-family:var(--mo)">5 mnt</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(34,197,94,.08);color:#16A34A">0-4m</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(245,158,11,.08);color:#D97706">4-5m</div>
+            <div style="font-size:9.5px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(239,68,68,.08);color:#DC2626">&gt;5m</div>
+          </div>
+        </div>
+      </div>
+      <!-- Alert Settings -->
+      <div style="background:#FFFFFF;border:1px solid rgba(0,0,0,.08);border-radius:10px;overflow:hidden">
+        <div style="padding:10px 13px;border-bottom:1px solid rgba(0,0,0,.07);font-size:12px;font-weight:700;color:#1C1814">Alert &amp; Sound Settings</div>
+        <div style="padding:10px 13px;display:flex;flex-direction:column;gap:7px">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;background:#F8F5F0;border:1px solid rgba(0,0,0,.06);border-radius:7px">
+            <div><div style="font-size:11.5px;font-weight:600;color:#1C1814">Suara Order Baru</div><div style="font-size:10px;color:#A09890;margin-top:1px">Single ding saat pesanan masuk</div></div>
+            <div style="width:36px;height:20px;border-radius:10px;background:#E4540C;position:relative;cursor:pointer;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;right:3px;top:3px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;background:#F8F5F0;border:1px solid rgba(0,0,0,.06);border-radius:7px">
+            <div><div style="font-size:11.5px;font-weight:600;color:#1C1814">Urgent Sound (2 ding)</div><div style="font-size:10px;color:#A09890;margin-top:1px">Double ding saat sangat terlambat</div></div>
+            <div style="width:36px;height:20px;border-radius:10px;background:#E4540C;position:relative;cursor:pointer;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;right:3px;top:3px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;background:#F8F5F0;border:1px solid rgba(0,0,0,.06);border-radius:7px">
+            <div><div style="font-size:11.5px;font-weight:600;color:#1C1814">Flash Alert</div><div style="font-size:10px;color:#A09890;margin-top:1px">Kartu berkedip saat Overdue</div></div>
+            <div style="width:36px;height:20px;border-radius:10px;background:#E4540C;position:relative;cursor:pointer;flex-shrink:0"><div style="width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;right:3px;top:3px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;background:#F8F5F0;border:1px solid rgba(0,0,0,.06);border-radius:7px">
+            <div><div style="font-size:11.5px;font-weight:600;color:#1C1814">Escalation Alert</div><div style="font-size:10px;color:#A09890;margin-top:1px">Repeat setiap 1 mnt saat SLA lewat</div></div>
+            <div style="width:36px;height:20px;border-radius:10px;background:#E8E2D9;position:relative;cursor:pointer;flex-shrink:0;border:1px solid rgba(0,0,0,.08)"><div style="width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;left:2px;top:2px;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>
+          </div>
+        </div>
+        <div style="padding:0 13px 12px;display:grid;grid-template-columns:1fr 1fr;gap:7px">
+          <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:3px">Warning (menit)</div><div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:6px;font-size:13px;font-weight:700;color:#D97706;text-align:center;font-family:var(--mo)">10</div></div>
+          <div><div style="font-size:10px;font-weight:700;color:#6B6459;margin-bottom:3px">Urgent (menit)</div><div style="background:#F4F1EC;border:1px solid rgba(0,0,0,.1);border-radius:6px;padding:6px;font-size:13px;font-weight:700;color:#DC2626;text-align:center;font-family:var(--mo)">20</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:60px;padding:26px 60px;background:#1C1814;color:#F4F1EC;display:flex;justify-content:space-between;align-items:center">
+  <div>
+    <div style="font-size:15px;font-weight:900">NASHTY OS · Wireframe v1.0</div>
+    <div style="font-size:11px;color:#9A9690;margin-top:3px">POS Terminal · KDS · Backoffice · Juni 2025</div>
+  </div>
+  <div style="font-size:11px;color:#9A9690;text-align:right;font-family:var(--mo)">
+    For Review &amp; Approval<br>
+    <span style="color:#E4540C">Nashty Hot Chicken</span>
+  </div>
+</div>
+
+<script>
+// numpad demo
+(function(){
+  const el = document.getElementById('numpad-demo');
+  if(!el) return;
+  [1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].forEach(k=>{
+    const d = document.createElement('div');
+    d.style.cssText = `background:${k==='✓'?'#E4540C':'rgba(255,255,255,.06)'};border:1px solid rgba(255,255,255,.08);border-radius:8px;height:34px;display:flex;align-items:center;justify-content:center;font-size:${typeof k==='number'?'13px':'15px'};font-weight:700;color:${k==='✓'?'#fff':'#9A9690'};cursor:pointer`;
+    d.textContent = k;
+    el.appendChild(d);
+  });
+})();
+
+// Scroll nav active state
+function gotoSection(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+window.addEventListener('scroll', ()=>{
+  const ids = ['sec-cover','sec-pos','sec-kds','sec-bo'];
+  const dots = document.querySelectorAll('.sn-dot');
+  ids.forEach((id,i)=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    if(window.scrollY >= top - 200){
+      dots.forEach(d=>d.classList.remove('act'));
+      if(dots[i]) dots[i].classList.add('act');
+    }
+  });
+},{passive:true});
+</script>

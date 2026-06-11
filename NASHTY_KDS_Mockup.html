@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NASHTY OS — KDS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700;9..40,900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS — Nashty OS Visual Identity
+═══════════════════════════════════════════ */
+:root {
+  --bg:    #0D0D0D;
+  --sf:    #141414;
+  --sf2:   #1A1A1A;
+  --sf3:   #222;
+  --sf4:   #2A2A2A;
+  --brd:   rgba(255,255,255,.07);
+  --brd2:  rgba(255,255,255,.12);
+  --txt:   #F2EFE8;
+  --txt2:  #9A9690;
+  --txt3:  #555;
+  --or:    #E4540C;
+  --orD:   #C23D08;
+  --orL:   rgba(228,84,12,.18);
+  --orL2:  rgba(228,84,12,.08);
+  --gn:    #22C55E;
+  --gnL:   rgba(34,197,94,.15);
+  --ye:    #F59E0B;
+  --yeL:   rgba(245,158,11,.15);
+  --rd:    #EF4444;
+  --rdL:   rgba(239,68,68,.15);
+  --bl:    #3B82F6;
+  --fn:    'DM Sans', sans-serif;
+  --mo:    'DM Mono', monospace;
+
+  /* KDS-specific — configurable via Backoffice */
+  --timer-size:   24px;
+  --order-size:   22px;
+  --qty-size:     15px;
+  --strip-w:      5px;
+  --swipe-color:  var(--gn);
+}
+
+/* Day mode */
+body.day {
+  --bg:   #F0EDE8;
+  --sf:   #FFFFFF;
+  --sf2:  #F5F2EC;
+  --sf3:  #EBE7E0;
+  --sf4:  #E0DDD5;
+  --brd:  rgba(0,0,0,.08);
+  --brd2: rgba(0,0,0,.14);
+  --txt:  #1A1714;
+  --txt2: #6B6560;
+  --txt3: #A8A29A;
+  --orL:  rgba(228,84,12,.12);
+  --orL2: rgba(228,84,12,.06);
+  --gnL:  rgba(34,197,94,.12);
+  --yeL:  rgba(245,158,11,.12);
+  --rdL:  rgba(239,68,68,.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { height:100%; background:var(--bg); color:var(--txt); font-family:var(--fn); overflow:hidden; }
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+.shell { display:flex; flex-direction:column; height:100vh; }
+
+/* ── TOPBAR ── */
+.topbar {
+  height:52px; flex-shrink:0; display:flex; align-items:center;
+  background:var(--sf); border-bottom:1px solid var(--brd);
+  padding:0 18px; gap:14px; position:relative; z-index:10;
+}
+.tb-logo {
+  width:30px; height:30px; border-radius:8px;
+  background:var(--or); display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:13px; color:#fff; flex-shrink:0;
+  box-shadow:0 0 12px rgba(228,84,12,.4);
+}
+.tb-brand { font-size:13px; font-weight:700; letter-spacing:.01em; }
+.tb-sub   { font-size:9px; color:var(--txt3); letter-spacing:.1em; text-transform:uppercase; margin-top:1px; }
+.tb-sep   { width:1px; height:26px; background:var(--brd2); }
+.tb-station {
+  font-size:12px; font-weight:600; color:var(--txt2);
+  background:var(--sf2); border:1px solid var(--brd2);
+  border-radius:6px; padding:3px 10px;
+}
+.live-pill {
+  display:flex; align-items:center; gap:6px;
+  background:var(--gnL); border:1px solid rgba(34,197,94,.25);
+  border-radius:20px; padding:3px 10px;
+}
+.live-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--gn); animation:livePulse 2s ease infinite;
+}
+@keyframes livePulse {
+  0%,100%{ opacity:1; }
+  50%    { opacity:.4; }
+}
+.live-txt { font-size:10.5px; font-weight:700; color:var(--gn); }
+
+/* Queue summary */
+.queue-summary {
+  display:flex; gap:10px; align-items:center;
+}
+.qs-item {
+  display:flex; flex-direction:column; align-items:center;
+  background:var(--sf2); border:1px solid var(--brd); border-radius:8px;
+  padding:4px 12px; min-width:56px;
+}
+.qs-n    { font-size:18px; font-weight:900; font-family:var(--mo); line-height:1; color:var(--txt); }
+.qs-lbl  { font-size:9px; color:var(--txt3); text-transform:uppercase; letter-spacing:.07em; margin-top:1px; }
+.qs-item.urgent .qs-n { color:var(--rd); }
+.qs-item.urgent       { border-color:rgba(239,68,68,.25); background:var(--rdL); }
+
+.tb-right { margin-left:auto; display:flex; align-items:center; gap:8px; }
+.tb-clock { font-size:18px; font-weight:500; font-family:var(--mo); color:var(--txt); letter-spacing:.04em; }
+.tb-btn {
+  display:flex; align-items:center; gap:5px; padding:5px 10px;
+  border-radius:7px; border:1px solid var(--brd2);
+  background:var(--sf2); color:var(--txt2); font-size:12px;
+  font-weight:600; cursor:pointer; font-family:var(--fn); transition:all .1s;
+}
+.tb-btn:hover { background:var(--sf3); color:var(--txt); }
+.tb-btn.act   { background:var(--or); border-color:var(--or); color:#fff; }
+
+/* ── URGENT STICKY STRIP ── */
+.urgent-strip {
+  display:none; flex-shrink:0;
+  background:rgba(239,68,68,.12); border-bottom:1px solid rgba(239,68,68,.25);
+  padding:6px 18px; align-items:center; gap:10px;
+  font-size:11.5px; font-weight:700;
+}
+.urgent-strip.visible { display:flex; }
+.ust-lbl { color:var(--rd); font-size:11px; text-transform:uppercase; letter-spacing:.08em; flex-shrink:0; }
+.ust-orders { display:flex; gap:6px; flex-wrap:wrap; }
+.ust-no {
+  background:var(--rd); color:#fff; font-size:10.5px; font-weight:900;
+  font-family:var(--mo); padding:2px 8px; border-radius:5px; cursor:pointer; transition:all .1s;
+}
+.ust-no:hover { transform:scale(1.05); }
+
+/* ── FILTER BAR ── */
+.filterbar {
+  height:44px; flex-shrink:0; display:flex; align-items:center;
+  gap:6px; padding:0 18px; background:var(--sf); border-bottom:1px solid var(--brd);
+}
+.flt {
+  padding:5px 13px; border-radius:16px; font-size:12px; font-weight:600;
+  border:1px solid var(--brd); background:transparent; color:var(--txt3);
+  cursor:pointer; transition:all .12s; font-family:var(--fn);
+}
+.flt:hover { color:var(--txt); border-color:var(--brd2); }
+.flt.act   { background:var(--or); border-color:var(--or); color:#fff; }
+.flt.danger.act { background:var(--rd); border-color:var(--rd); }
+.flt-sep { flex:1; }
+.sort-info { font-size:11px; color:var(--txt3); display:flex; align-items:center; gap:5px; }
+
+/* ── GRID ── */
+.kds-grid {
+  flex:1; overflow-y:auto; overflow-x:hidden;
+  padding:14px 18px 24px;
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  gap:12px;
+  align-content:start;
+}
+.kds-grid::-webkit-scrollbar { width:4px; }
+.kds-grid::-webkit-scrollbar-thumb { background:var(--sf4); border-radius:2px; }
+
+/* ═══════════════════════════════════════════
+   ORDER CARD
+═══════════════════════════════════════════ */
+.ocard {
+  background:var(--sf); border:1px solid var(--brd);
+  border-radius:13px; overflow:hidden; display:flex;
+  flex-direction:column; position:relative;
+  box-shadow:0 2px 10px rgba(0,0,0,.25);
+  transition:transform .15s, box-shadow .15s;
+  animation:cardIn .28s cubic-bezier(.16,1,.3,1) both;
+}
+.ocard:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.35); }
+
+@keyframes cardIn {
+  from { transform:scale(.93) translateY(12px); opacity:0; }
+  to   { transform:none; opacity:1; }
+}
+
+/* Priority strip — left side */
+.ocard::before {
+  content:''; position:absolute; top:0; left:0; bottom:0;
+  width:var(--strip-w); background:var(--strip-col, var(--gn));
+  border-radius:13px 0 0 13px;
+}
+
+/* New order highlight */
+.ocard.new-highlight {
+  animation:cardIn .28s cubic-bezier(.16,1,.3,1) both, newHighlight 3.5s ease forwards;
+}
+@keyframes newHighlight {
+  0%,40% { box-shadow:0 0 0 2px var(--or), 0 6px 20px rgba(228,84,12,.3); }
+  100%   { box-shadow:0 2px 10px rgba(0,0,0,.25); }
+}
+
+/* Urgency states */
+.ocard.warn   { --strip-col:var(--ye); animation:cardIn .28s cubic-bezier(.16,1,.3,1) both, warnPulse 2.5s ease infinite; }
+.ocard.urgent { --strip-col:var(--rd); animation:cardIn .28s cubic-bezier(.16,1,.3,1) both, urgentPulse 1.2s ease infinite; }
+.ocard.done   { --strip-col:var(--gn); opacity:.55; }
+
+@keyframes warnPulse {
+  0%,100% { border-color:rgba(245,158,11,.25); box-shadow:0 2px 10px rgba(0,0,0,.2); }
+  50%     { border-color:rgba(245,158,11,.6);  box-shadow:0 0 0 3px rgba(245,158,11,.12); }
+}
+@keyframes urgentPulse {
+  0%,100% { border-color:rgba(239,68,68,.4); box-shadow:0 2px 10px rgba(0,0,0,.2); }
+  50%     { border-color:rgba(239,68,68,.9); box-shadow:0 0 0 4px rgba(239,68,68,.15); }
+}
+
+/* ── CARD HEAD ── */
+.oc-head {
+  padding:10px 13px 9px 18px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  border-bottom:1px solid var(--brd);
+  background:var(--sf2);
+}
+.oc-head-left { display:flex; flex-direction:column; gap:4px; }
+
+/* Order number — LARGE, visible from distance */
+.oc-no {
+  font-size:var(--order-size); font-weight:900; color:var(--txt);
+  font-family:var(--mo); letter-spacing:.02em; line-height:1;
+}
+
+.oc-meta { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.oc-table { font-size:11px; color:var(--txt2); font-weight:600; }
+.oc-type {
+  font-size:9px; font-weight:800; padding:2px 7px; border-radius:5px;
+  text-transform:uppercase; letter-spacing:.05em;
+}
+.type-dine  { background:var(--orL); color:var(--or); }
+.type-take  { background:rgba(59,130,246,.15); color:#60A5FA; }
+.type-gof   { background:rgba(227,23,91,.15); color:#E3175B; }
+.type-grab  { background:rgba(0,177,79,.15); color:#00B14F; }
+.type-sf    { background:rgba(238,77,45,.15); color:#EE4D2D; }
+
+/* Timer — LARGE, high priority */
+.oc-head-right { display:flex; flex-direction:column; align-items:flex-end; gap:3px; }
+.oc-timer {
+  font-size:var(--timer-size); font-weight:700; font-family:var(--mo);
+  letter-spacing:.03em; line-height:1;
+}
+.oc-timer.fresh  { color:var(--gn); }
+.oc-timer.warn   { color:var(--ye); }
+.oc-timer.urgent { color:var(--rd); }
+
+.oc-timer-lbl { font-size:8.5px; color:var(--txt3); text-align:right; text-transform:uppercase; letter-spacing:.06em; }
+.oc-urgency {
+  font-size:9px; font-weight:800; padding:2px 7px; border-radius:5px;
+  text-transform:uppercase; letter-spacing:.04em;
+}
+.urg-ok  { background:var(--gnL); color:var(--gn); }
+.urg-warn{ background:var(--yeL); color:var(--ye); }
+.urg-urg { background:var(--rdL); color:var(--rd); }
+
+/* ── CARD ITEMS ── */
+.oc-items { padding:8px 12px; flex:1; display:flex; flex-direction:column; gap:6px; }
+.oc-item {
+  padding:7px 9px; border-radius:8px;
+  background:var(--sf2); border:1px solid var(--brd);
+  display:flex; align-items:flex-start; gap:8px;
+}
+
+/* Quantity — large, before name */
+.oc-qty {
+  min-width:24px; height:24px; border-radius:6px;
+  background:var(--or); color:#fff;
+  font-size:var(--qty-size); font-weight:900; font-family:var(--mo);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:1px;
+}
+.ocard.warn   .oc-qty { background:var(--ye); }
+.ocard.urgent .oc-qty { background:var(--rd); }
+.ocard.done   .oc-qty { background:var(--sf4); color:var(--txt3); }
+
+.oc-item-info { flex:1; min-width:0; }
+.oc-item-name { font-size:13.5px; font-weight:700; color:var(--txt); line-height:1.3; }
+
+/* Modifiers + addons */
+.oc-mods { display:flex; flex-wrap:wrap; gap:3px; margin-top:5px; }
+.oc-mod {
+  font-size:10px; font-weight:600; padding:2px 7px; border-radius:4px;
+  background:var(--orL2); color:var(--or);
+}
+.oc-mod.addon { background:var(--gnL); color:var(--gn); }
+
+/* Kitchen note — HIGH VISIBILITY */
+.oc-note {
+  margin-top:5px; padding:5px 8px;
+  background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.3);
+  border-radius:6px; display:flex; align-items:flex-start; gap:5px;
+}
+.oc-note-ico { font-size:11px; flex-shrink:0; margin-top:1px; }
+.oc-note-txt { font-size:11px; font-weight:700; color:var(--ye); line-height:1.4; }
+
+/* ── SWIPE TO COMPLETE ── */
+.swipe-wrap {
+  padding:8px 12px 10px; border-top:1px solid var(--brd);
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--sf2);
+}
+.oc-cashier { font-size:10.5px; color:var(--txt3); flex:1; }
+
+.swipe-track {
+  width:160px; height:36px; border-radius:18px;
+  background:var(--sf3); border:1px solid var(--brd2);
+  position:relative; overflow:hidden; cursor:pointer;
+  flex-shrink:0; user-select:none; -webkit-user-select:none;
+}
+.swipe-track::after {
+  content:'Swipe →';
+  position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; font-size:11px; font-weight:700; color:var(--txt3);
+  letter-spacing:.05em; pointer-events:none; transition:opacity .2s;
+}
+.swipe-track.swiping::after { opacity:0; }
+.swipe-thumb {
+  position:absolute; left:3px; top:3px;
+  width:30px; height:28px; border-radius:14px;
+  background:var(--gn); display:flex; align-items:center; justify-content:center;
+  transition:left .08s; cursor:grab; box-shadow:0 2px 8px rgba(34,197,94,.4);
+}
+.ocard.warn .swipe-thumb  { background:var(--ye); box-shadow:0 2px 8px rgba(245,158,11,.4); }
+.ocard.urgent .swipe-thumb{ background:var(--rd); box-shadow:0 2px 8px rgba(239,68,68,.4); }
+.swipe-fill {
+  position:absolute; left:0; top:0; bottom:0;
+  background:rgba(34,197,94,.12); border-radius:18px;
+  width:0; transition:width .08s; pointer-events:none;
+}
+.ocard.warn .swipe-fill   { background:rgba(245,158,11,.12); }
+.ocard.urgent .swipe-fill { background:rgba(239,68,68,.12); }
+
+/* Done state */
+.ocard.done .swipe-track::after { content:'Selesai ✓'; color:var(--gn); }
+.ocard.done .swipe-thumb { background:var(--sf4); box-shadow:none; }
+.ocard.done .swipe-track { cursor:not-allowed; pointer-events:none; }
+
+/* ── POS NOTIFICATION OVERLAY ── */
+.pos-notify-overlay {
+  position:fixed; inset:0; z-index:999;
+  background:rgba(0,0,0,.78); backdrop-filter:blur(12px);
+  display:none; align-items:center; justify-content:center;
+}
+.pos-notify-overlay.visible { display:flex; animation:fadeIn .2s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+.pos-notify-box {
+  background:var(--sf); border:1px solid var(--brd2);
+  border-radius:20px; padding:36px 40px;
+  text-align:center; width:400px;
+  box-shadow:0 24px 64px rgba(0,0,0,.8);
+  animation:boxIn .28s cubic-bezier(.16,1,.3,1);
+}
+@keyframes boxIn {
+  from { transform:scale(.92) translateY(16px); opacity:0; }
+  to   { transform:none; opacity:1; }
+}
+.pn-icon {
+  width:68px; height:68px; border-radius:50%; margin:0 auto 18px;
+  background:var(--gnL); border:2px solid rgba(34,197,94,.35);
+  display:flex; align-items:center; justify-content:center;
+  animation:popBounce .5s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popBounce { from{transform:scale(0);opacity:0} to{transform:none;opacity:1} }
+.pn-title   { font-size:22px; font-weight:900; margin-bottom:4px; }
+.pn-order   { font-size:32px; font-weight:900; font-family:var(--mo); color:var(--gn); margin:6px 0; letter-spacing:.02em; }
+.pn-sub     { font-size:13px; color:var(--txt2); margin-bottom:12px; }
+.pn-items   {
+  font-size:12px; color:var(--txt2); text-align:left;
+  background:var(--sf2); border-radius:10px; padding:12px 14px;
+  margin-bottom:12px; line-height:1.8; font-family:var(--mo);
+  max-height:140px; overflow-y:auto;
+}
+.pn-warn {
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  background:var(--yeL); border:1px solid rgba(245,158,11,.25);
+  border-radius:8px; padding:8px 14px; margin-bottom:18px;
+  font-size:12px; font-weight:700; color:var(--ye);
+}
+.pn-confirm {
+  width:100%; padding:15px; border-radius:12px; border:none;
+  background:var(--gn); color:#fff; font-size:15px; font-weight:800;
+  font-family:var(--fn); cursor:pointer; transition:all .12s;
+  box-shadow:0 4px 16px rgba(34,197,94,.35);
+}
+.pn-confirm:hover { background:#16A34A; transform:translateY(-1px); }
+.pn-confirm:active { transform:scale(.97); }
+
+/* ── DEMO TIMER CHIP for "just added" animation ── */
+.ocard.new-highlight .oc-no { color:var(--or); }
+
+/* Compact mode (high queue) */
+.kds-grid.compact {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap:8px;
+}
+.kds-grid.compact .oc-item { padding:5px 7px; gap:6px; }
+.kds-grid.compact .oc-item-name { font-size:12.5px; }
+.kds-grid.compact .oc-qty { width:20px; height:20px; font-size:12px; }
+.kds-grid.compact .oc-note { padding:4px 7px; }
+
+/* Empty state */
+.kds-empty {
+  grid-column:1/-1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:12px;
+  padding:80px 20px; color:var(--txt3);
+}
+.kds-empty-icon { opacity:.1; }
+.kds-empty-t { font-size:15px; font-weight:700; }
+.kds-empty-s { font-size:12px; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ── TOPBAR ── -->
+<header class="topbar">
+  <div class="tb-logo">N</div>
+  <div>
+    <div class="tb-brand">NASHTY OS</div>
+    <div class="tb-sub">Kitchen Display</div>
+  </div>
+  <div class="tb-sep"></div>
+  <div class="tb-station">Dapur Utama</div>
+  <div class="tb-sep"></div>
+  <div class="live-pill"><div class="live-dot"></div><span class="live-txt">Live</span></div>
+
+  <!-- Queue Summary: Orders · Items · Urgent -->
+  <div class="queue-summary" id="queue-summary">
+    <div class="qs-item" id="qs-orders">
+      <div class="qs-n" id="qs-orders-n">0</div>
+      <div class="qs-lbl">Orders</div>
+    </div>
+    <div class="qs-item" id="qs-items">
+      <div class="qs-n" id="qs-items-n">0</div>
+      <div class="qs-lbl">Items</div>
+    </div>
+    <div class="qs-item urgent" id="qs-urgent">
+      <div class="qs-n" id="qs-urgent-n">0</div>
+      <div class="qs-lbl">Urgent</div>
+    </div>
+  </div>
+
+  <div class="tb-right">
+    <div class="tb-clock" id="kds-clock">00:00:00</div>
+    <div class="tb-btn" id="mode-btn" onclick="toggleMode()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      Day
+    </div>
+    <div class="tb-btn" onclick="addDemoOrder()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Order
+    </div>
+  </div>
+</header>
+
+<!-- ── URGENT STICKY STRIP ── -->
+<div class="urgent-strip" id="urgent-strip">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  <span class="ust-lbl">URGENT</span>
+  <div class="ust-orders" id="ust-orders"></div>
+</div>
+
+<!-- ── FILTER BAR ── -->
+<div class="filterbar">
+  <button class="flt act" onclick="setFilter('all',this)">Semua</button>
+  <button class="flt" onclick="setFilter('dine',this)">Dine In</button>
+  <button class="flt" onclick="setFilter('take',this)">Take Away</button>
+  <button class="flt" onclick="setFilter('delivery',this)">Delivery</button>
+  <button class="flt danger" id="flt-urgent" onclick="setFilter('urgent',this)">⚠ Urgent</button>
+  <div class="flt-sep"></div>
+  <div class="sort-info">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="9" y2="18"/></svg>
+    Auto-sort: Urgent → Warning → Fresh
+  </div>
+</div>
+
+<!-- ── ORDER GRID ── -->
+<div class="kds-grid" id="kds-grid"></div>
+
+<!-- ── POS NOTIFICATION OVERLAY ── -->
+<div class="pos-notify-overlay" id="pos-notify">
+  <div class="pos-notify-box">
+    <div class="pn-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="pn-title">Pesanan Selesai!</div>
+    <div class="pn-order" id="pn-order-no">—</div>
+    <div class="pn-sub" id="pn-sub">Meja T03 · Dine In</div>
+    <div class="pn-items" id="pn-items"></div>
+    <div class="pn-warn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Konfirmasi ke pelanggan sebelum klik selesai
+    </div>
+    <button class="pn-confirm" id="pn-confirm-btn">
+      ✓ Pesanan Sudah Diserahkan ke Pelanggan
+    </button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONFIG (all configurable via Backoffice in production)
+// ═══════════════════════════════════════════════════════
+const CFG = {
+  warnMin:    10,   // Warning threshold (minutes)
+  urgentMin:  20,   // Urgent threshold (minutes)
+  swipeEnabled: true,
+  soundEnabled: true,
+  highlightDuration: 3500,
+  stickyUrgent: true,
+  autoSort: true,
+  compactThreshold: 12,
+};
+
+// ═══════════════════════════════════════════════════════
+// TYPES
+// ═══════════════════════════════════════════════════════
+const TYPE_LABEL = {dine:'Dine In',take:'Take Away',gofood:'GoFood',grabfood:'GrabFood',shopee:'ShopeeFood'};
+const TYPE_CSS   = {dine:'dine',take:'take',gofood:'gof',grabfood:'grab',shopee:'sf'};
+const NOW = Date.now();
+const MIN = 60000;
+
+// ═══════════════════════════════════════════════════════
+// DEMO DATA
+// ═══════════════════════════════════════════════════════
+let ORDERS = [
+  {
+    id:1, no:'#0188', table:'T03', type:'dine', cashier:'Citra',
+    startTs: NOW - 3*MIN - 20000, status:'active',
+    items:[
+      {n:'Nasi Goreng Spesial', qty:2, mods:['Pedas Sedang'], addons:[], note:''},
+      {n:'Kopi Susu Aren',      qty:1, mods:['Dingin'],       addons:['+Oat Milk'], note:''},
+    ]
+  },
+  {
+    id:2, no:'#0189', table:'T07', type:'dine', cashier:'Budi',
+    startTs: NOW - 12*MIN - 15000, status:'active',
+    items:[
+      {n:'Ayam Bakar Madu', qty:1, mods:['Pedas Extra'], addons:['+Extra Sambal','+Nasi Putih'], note:'Sambalnya pisah ya'},
+      {n:'Rawon Spesial',   qty:2, mods:['Telur Asin'],  addons:[], note:''},
+    ]
+  },
+  {
+    id:3, no:'#0190', table:'TAKE', type:'take', cashier:'Ani',
+    startTs: NOW - 23*MIN - 5000, status:'active',
+    items:[
+      {n:'Sate Ayam 10pcs', qty:1, mods:['Mix'],        addons:['+Extra Sate 5pcs','+Lontong'], note:''},
+      {n:'Es Teh Manis',    qty:2, mods:['Kurang Manis'],addons:[], note:'Tanpa es untuk 1'},
+      {n:'French Fries',    qty:1, mods:['Keju'],        addons:['+Cheese Dip'], note:''},
+    ]
+  },
+  {
+    id:4, no:'#0191', table:'GoFood', type:'gofood', cashier:'Citra',
+    startTs: NOW - 7*MIN, status:'active',
+    items:[
+      {n:'Ayam Geprek',qty:2, mods:['Level 3'],addons:[], note:'Extra pedas beneran'},
+      {n:'Nasi Putih', qty:2, mods:[],          addons:[], note:''},
+      {n:'Lemon Tea',  qty:2, mods:[],          addons:[], note:''},
+    ]
+  },
+  {
+    id:5, no:'#0187', table:'T12', type:'dine', cashier:'Citra',
+    startTs: NOW - 18*MIN, status:'active',
+    items:[
+      {n:'Sop Buntut',     qty:1, mods:[],      addons:['+Extra Kuah'], note:''},
+      {n:'Es Krim Cokelat',qty:2, mods:['Oreo'],addons:['+Extra Scoop'], note:''},
+    ]
+  },
+  {
+    id:6, no:'#0186', table:'T01', type:'dine', cashier:'Budi',
+    startTs: NOW - 28*MIN, status:'active',
+    items:[
+      {n:'Gado-Gado',  qty:1, mods:[], addons:[], note:'Tanpa kacang'},
+      {n:'Jus Alpukat',qty:1, mods:['Large'], addons:[], note:''},
+    ]
+  },
+];
+
+let curFilter = 'all';
+let pendingDoneId = null;
+let demoCounter = 7;
+let isDayMode = false;
+
+// ═══════════════════════════════════════════════════════
+// CLOCK
+// ═══════════════════════════════════════════════════════
+function pad(n){ return String(n).padStart(2,'0'); }
+function tick(){
+  const n = new Date();
+  document.getElementById('kds-clock').textContent =
+    pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
+}
+setInterval(tick, 1000); tick();
+
+// ═══════════════════════════════════════════════════════
+// TIMER + URGENCY
+// ═══════════════════════════════════════════════════════
+function getElapsed(ts){ return Math.floor((Date.now()-ts)/1000); }
+function fmtTimer(sec){
+  const m = Math.floor(sec/60), s = sec%60;
+  return pad(m)+':'+pad(s);
+}
+function urgClass(sec){
+  if(sec >= CFG.urgentMin*60) return 'urgent';
+  if(sec >= CFG.warnMin*60)   return 'warn';
+  return 'fresh';
+}
+
+// ═══════════════════════════════════════════════════════
+// FILTER + SORT
+// ═══════════════════════════════════════════════════════
+function setFilter(f, el){
+  curFilter = f;
+  document.querySelectorAll('.flt').forEach(b=>b.classList.remove('act'));
+  el.classList.add('act');
+  render();
+}
+
+function getFiltered(){
+  let list = ORDERS.filter(o=>o.status==='active');
+  if(curFilter==='dine')     list=list.filter(o=>o.type==='dine');
+  else if(curFilter==='take')list=list.filter(o=>o.type==='take');
+  else if(curFilter==='delivery') list=list.filter(o=>['gofood','grabfood','shopee'].includes(o.type));
+  else if(curFilter==='urgent')   list=list.filter(o=>urgClass(getElapsed(o.startTs))==='urgent');
+
+  // Auto-sort: Urgent → Warning → Fresh, then oldest first within each
+  if(CFG.autoSort){
+    const urgOrder = {urgent:0, warn:1, fresh:2};
+    list.sort((a,b)=>{
+      const ua = urgOrder[urgClass(getElapsed(a.startTs))];
+      const ub = urgOrder[urgClass(getElapsed(b.startTs))];
+      return ua !== ub ? ua-ub : a.startTs-b.startTs;
+    });
+  }
+  return list;
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════
+function render(){
+  const grid  = document.getElementById('kds-grid');
+  const list  = getFiltered();
+  const active= ORDERS.filter(o=>o.status==='active');
+
+  // Queue summary
+  const totalItems = active.reduce((s,o)=>s+o.items.reduce((si,i)=>si+i.qty,0),0);
+  const urgCount   = active.filter(o=>urgClass(getElapsed(o.startTs))==='urgent').length;
+  document.getElementById('qs-orders-n').textContent = active.length;
+  document.getElementById('qs-items-n').textContent  = totalItems;
+  document.getElementById('qs-urgent-n').textContent = urgCount;
+
+  // Urgent strip
+  const strip = document.getElementById('urgent-strip');
+  const ustOrders = document.getElementById('ust-orders');
+  if(CFG.stickyUrgent && urgCount > 0){
+    strip.classList.add('visible');
+    const urgList = active.filter(o=>urgClass(getElapsed(o.startTs))==='urgent');
+    ustOrders.innerHTML = urgList.map(o=>
+      `<div class="ust-no" onclick="scrollToCard(${o.id})">${o.no}</div>`
+    ).join('');
+  } else {
+    strip.classList.remove('visible');
+  }
+
+  // Urgent filter badge
+  const fltUrgent = document.getElementById('flt-urgent');
+  fltUrgent.textContent = urgCount > 0 ? `⚠ Urgent (${urgCount})` : '⚠ Urgent';
+
+  // Compact mode
+  if(list.length >= CFG.compactThreshold) grid.classList.add('compact');
+  else grid.classList.remove('compact');
+
+  // Preserve scroll
+  const scrollY = grid.scrollTop;
+
+  if(list.length === 0){
+    grid.innerHTML = `<div class="kds-empty">
+      <div class="kds-empty-icon">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      </div>
+      <div class="kds-empty-t">Tidak ada pesanan aktif</div>
+      <div class="kds-empty-s">Pesanan baru akan muncul di sini secara otomatis</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(o => buildCard(o)).join('');
+  grid.scrollTop = scrollY;
+
+  // Re-attach swipe handlers
+  list.forEach(o => attachSwipe(o.id));
+}
+
+// ═══════════════════════════════════════════════════════
+// BUILD CARD
+// ═══════════════════════════════════════════════════════
+function buildCard(o){
+  const sec     = getElapsed(o.startTs);
+  const urg     = urgClass(sec);
+  const isDone  = o.status === 'done';
+  const typeCss = TYPE_CSS[o.type] || 'dine';
+  const typeLabel = TYPE_LABEL[o.type] || o.type;
+
+  const urgBadge = {
+    fresh:  `<span class="oc-urgency urg-ok">On time</span>`,
+    warn:   `<span class="oc-urgency urg-warn">&gt;${CFG.warnMin} mnt</span>`,
+    urgent: `<span class="oc-urgency urg-urg">&gt;${CFG.urgentMin} mnt</span>`,
+  }[urg];
+
+  // Items HTML
+  let itemsHtml = o.items.map(it=>{
+    const modsHtml = it.mods.map(m=>`<span class="oc-mod">${m}</span>`).join('');
+    const addonsHtml = it.addons.map(a=>`<span class="oc-mod addon">${a}</span>`).join('');
+    const noteHtml = it.note
+      ? `<div class="oc-note"><span class="oc-note-ico">⚠</span><span class="oc-note-txt">${it.note}</span></div>`
+      : '';
+    return `<div class="oc-item">
+      <div class="oc-qty">${it.qty}</div>
+      <div class="oc-item-info">
+        <div class="oc-item-name">${it.n}</div>
+        ${(modsHtml||addonsHtml) ? `<div class="oc-mods">${modsHtml}${addonsHtml}</div>` : ''}
+        ${noteHtml}
+      </div>
+    </div>`;
+  }).join('');
+
+  // Swipe button
+  const swipeHtml = `<div class="swipe-wrap">
+    <div class="oc-cashier">Kasir: ${o.cashier}</div>
+    <div class="swipe-track" id="swipe-${o.id}">
+      <div class="swipe-fill" id="swipefill-${o.id}"></div>
+      <div class="swipe-thumb" id="swipethumb-${o.id}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+  </div>`;
+
+  const cardClass = ['ocard', isDone?'done':urg].filter(Boolean).join(' ');
+
+  return `<div class="${cardClass}" id="ocard-${o.id}">
+    <div class="oc-head">
+      <div class="oc-head-left">
+        <div class="oc-no">${o.no}</div>
+        <div class="oc-meta">
+          <span class="oc-table">${o.table}</span>
+          <span class="oc-type type-${typeCss}">${typeLabel}</span>
+        </div>
+      </div>
+      <div class="oc-head-right">
+        <div class="oc-timer ${isDone?'fresh':urg}" id="timer-${o.id}">${fmtTimer(sec)}</div>
+        <div class="oc-timer-lbl">menit:detik</div>
+        ${urgBadge}
+      </div>
+    </div>
+    <div class="oc-items">${itemsHtml}</div>
+    ${swipeHtml}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// SWIPE TO COMPLETE
+// ═══════════════════════════════════════════════════════
+function attachSwipe(orderId){
+  const track = document.getElementById(`swipe-${orderId}`);
+  const thumb = document.getElementById(`swipethumb-${orderId}`);
+  const fill  = document.getElementById(`swipefill-${orderId}`);
+  if(!track || !thumb) return;
+
+  const order = ORDERS.find(o=>o.id===orderId);
+  if(!order || order.status==='done') return;
+
+  let dragging = false, startX = 0, curX = 0;
+  const trackW = 160;
+  const thumbW = 30;
+  const maxLeft = trackW - thumbW - 6;
+
+  function startDrag(x){
+    dragging = true;
+    startX = x;
+    curX = parseInt(thumb.style.left||'3');
+    track.classList.add('swiping');
+    thumb.style.transition = 'none';
+    fill.style.transition   = 'none';
+  }
+  function moveDrag(x){
+    if(!dragging) return;
+    const dx   = x - startX;
+    const newL = Math.max(3, Math.min(maxLeft, curX + dx));
+    thumb.style.left = newL + 'px';
+    const pct = (newL - 3) / (maxLeft - 3);
+    fill.style.width = (newL + thumbW) + 'px';
+    if(pct >= 1) endDrag(true);
+  }
+  function endDrag(complete){
+    if(!dragging) return;
+    dragging = false;
+    track.classList.remove('swiping');
+    thumb.style.transition = '';
+    fill.style.transition  = '';
+    if(complete){
+      thumb.style.left  = maxLeft + 'px';
+      fill.style.width  = '100%';
+      markDone(orderId);
+    } else {
+      thumb.style.left = '3px';
+      fill.style.width = '0';
+    }
+  }
+
+  // Touch
+  track.addEventListener('touchstart', e=>{ startDrag(e.touches[0].clientX); e.preventDefault(); }, {passive:false});
+  track.addEventListener('touchmove',  e=>{ moveDrag(e.touches[0].clientX); e.preventDefault(); },  {passive:false});
+  track.addEventListener('touchend',   ()=>{ endDrag(false); });
+
+  // Mouse
+  track.addEventListener('mousedown',  e=>startDrag(e.clientX));
+  document.addEventListener('mousemove', e=>{ if(dragging) moveDrag(e.clientX); });
+  document.addEventListener('mouseup',   e=>{ if(dragging) endDrag(false); });
+
+  // Click shortcut (for demo)
+  track.addEventListener('click', ()=>{
+    if(CFG.swipeEnabled) return; // swipe only
+    markDone(orderId);
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// MARK DONE → Show POS notification (cannot close until confirmed)
+// ═══════════════════════════════════════════════════════
+function markDone(orderId){
+  const o = ORDERS.find(x=>x.id===orderId);
+  if(!o || o.status!=='active') return;
+  o.status = 'done';
+  pendingDoneId = orderId;
+  showPosNotify(o);
+  render();
+}
+
+function showPosNotify(o){
+  document.getElementById('pn-order-no').textContent = o.no;
+  document.getElementById('pn-sub').textContent = `${o.table} · ${TYPE_LABEL[o.type]||o.type} · Kasir: ${o.cashier}`;
+  
+  let itemsText = '';
+  o.items.forEach(it=>{
+    itemsText += `${it.qty}× ${it.n}`;
+    const allMods = [...it.mods, ...it.addons];
+    if(allMods.length) itemsText += ' (' + allMods.join(', ') + ')';
+    if(it.note) itemsText += '\n   ⚠ ' + it.note;
+    itemsText += '\n';
+  });
+  document.getElementById('pn-items').textContent = itemsText.trim();
+
+  const overlay = document.getElementById('pos-notify');
+  overlay.classList.add('visible');
+
+  document.getElementById('pn-confirm-btn').onclick = confirmDone;
+
+  // Prevent closing by clicking outside
+  overlay.onclick = (e)=>{ if(e.target===overlay){ /* blocked */ } };
+}
+
+function confirmDone(){
+  if(pendingDoneId === null) return;
+  const o = ORDERS.find(x=>x.id===pendingDoneId);
+  if(o) o.status = 'confirmed';
+  pendingDoneId = null;
+  document.getElementById('pos-notify').classList.remove('visible');
+  render();
+}
+
+// ═══════════════════════════════════════════════════════
+// LIVE TIMER UPDATE (every second)
+// ═══════════════════════════════════════════════════════
+function updateTimers(){
+  ORDERS.forEach(o=>{
+    if(o.status!=='active') return;
+    const sec = getElapsed(o.startTs);
+    const urg = urgClass(sec);
+
+    const timerEl = document.getElementById('timer-'+o.id);
+    if(timerEl){
+      timerEl.textContent = fmtTimer(sec);
+      timerEl.className = 'oc-timer ' + urg;
+    }
+
+    const card = document.getElementById('ocard-'+o.id);
+    if(card){
+      const wasWarn   = card.classList.contains('warn');
+      const wasUrgent = card.classList.contains('urgent');
+      if((urg==='warn'&&!wasWarn)||(urg==='urgent'&&!wasUrgent)){
+        card.classList.remove('fresh','warn','urgent');
+        card.classList.add(urg);
+        if(urg==='urgent' && CFG.soundEnabled) playSound('urgent');
+      }
+    }
+  });
+
+  // Update queue summary counts
+  const active = ORDERS.filter(o=>o.status==='active');
+  const totalItems = active.reduce((s,o)=>s+o.items.reduce((si,i)=>si+i.qty,0),0);
+  const urgCount   = active.filter(o=>urgClass(getElapsed(o.startTs))==='urgent').length;
+  const el_o = document.getElementById('qs-orders-n');
+  const el_i = document.getElementById('qs-items-n');
+  const el_u = document.getElementById('qs-urgent-n');
+  if(el_o) el_o.textContent = active.length;
+  if(el_i) el_i.textContent = totalItems;
+  if(el_u) el_u.textContent = urgCount;
+
+  // Update urgent strip
+  const strip = document.getElementById('urgent-strip');
+  const ustOrders = document.getElementById('ust-orders');
+  if(CFG.stickyUrgent && urgCount > 0){
+    strip.classList.add('visible');
+    const urgList = active.filter(o=>urgClass(getElapsed(o.startTs))==='urgent');
+    const expected = urgList.map(o=>o.no).join(',');
+    if(ustOrders.dataset.last !== expected){
+      ustOrders.dataset.last = expected;
+      ustOrders.innerHTML = urgList.map(o=>
+        `<div class="ust-no" onclick="scrollToCard(${o.id})">${o.no}</div>`
+      ).join('');
+    }
+  } else {
+    strip.classList.remove('visible');
+  }
+
+  const fltU = document.getElementById('flt-urgent');
+  if(fltU) fltU.textContent = urgCount>0?`⚠ Urgent (${urgCount})`:'⚠ Urgent';
+}
+
+setInterval(updateTimers, 1000);
+
+// ═══════════════════════════════════════════════════════
+// SCROLL TO CARD (from urgent strip)
+// ═══════════════════════════════════════════════════════
+function scrollToCard(id){
+  const el = document.getElementById('ocard-'+id);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ═══════════════════════════════════════════════════════
+// SOUND (Web Audio API)
+// ═══════════════════════════════════════════════════════
+let audioCtx = null;
+function ensureAudio(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+}
+function playTone(freq, dur, vol=0.3, when=0){
+  try {
+    ensureAudio();
+    const osc  = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.frequency.value = freq;
+    osc.type = 'sine';
+    const t = audioCtx.currentTime + when;
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t+dur);
+    osc.start(t); osc.stop(t+dur);
+  } catch(e){}
+}
+function playSound(type){
+  if(!CFG.soundEnabled) return;
+  if(type==='new')    { playTone(880, 0.18, 0.25); }
+  if(type==='urgent') { playTone(660, 0.12, 0.3, 0); playTone(880, 0.12, 0.3, 0.18); }
+}
+
+// ═══════════════════════════════════════════════════════
+// ADD DEMO ORDER
+// ═══════════════════════════════════════════════════════
+const DEMO_ORDERS = [
+  {table:'T05', type:'dine', cashier:'Ani',   items:[{n:'Pecel Lele',qty:1,mods:[],addons:[],note:''},{n:'Es Teh Manis',qty:1,mods:['Normal'],addons:[],note:''}]},
+  {table:'GrabFood',type:'grabfood',cashier:'Budi',items:[{n:'Ayam Bakar Madu',qty:2,mods:['Original'],addons:['+Extra Sambal'],note:''},{n:'Nasi Putih',qty:2,mods:[],addons:[],note:''}]},
+  {table:'T11', type:'dine', cashier:'Citra', items:[{n:'Kopi Susu Aren',qty:3,mods:['Dingin'],addons:['+Extra Shot'],note:'Semua jangan terlalu manis'},{n:'French Fries',qty:1,mods:['Tomat','Mayo'],addons:[],note:''}]},
+  {table:'T09', type:'dine', cashier:'Budi',  items:[{n:'Sop Buntut',qty:1,mods:[],addons:['+Extra Kuah'],note:'Kuahnya banyakin'},{n:'Rawon Spesial',qty:1,mods:[],addons:[],note:''}]},
+  {table:'ShopeeFood',type:'shopee',cashier:'Ani',items:[{n:'Ayam Geprek',qty:3,mods:['Level 2'],addons:[],note:'Minta nasi pisah'},{n:'Lemon Tea',qty:3,mods:[],addons:[],note:''}]},
+];
+
+function addDemoOrder(){
+  const d = DEMO_ORDERS[demoCounter % DEMO_ORDERS.length];
+  const id = ++demoCounter + 100;
+  const no = '#' + String(188 + demoCounter).padStart(4,'0');
+  const order = {
+    id, no,
+    table:   d.table,
+    type:    d.type,
+    cashier: d.cashier,
+    startTs: Date.now(),
+    status: 'active',
+    items:   d.items,
+  };
+  ORDERS.unshift(order);
+  render();
+  playSound('new');
+
+  // Highlight new card for 3.5s
+  setTimeout(()=>{
+    const card = document.getElementById('ocard-'+id);
+    if(card) card.classList.add('new-highlight');
+  }, 50);
+  setTimeout(()=>{
+    const card = document.getElementById('ocard-'+id);
+    if(card) card.classList.remove('new-highlight');
+  }, CFG.highlightDuration + 50);
+}
+
+// ═══════════════════════════════════════════════════════
+// DAY/DARK MODE
+// ═══════════════════════════════════════════════════════
+function toggleMode(){
+  isDayMode = !isDayMode;
+  document.body.classList.toggle('day', isDayMode);
+  const btn = document.getElementById('mode-btn');
+  if(isDayMode){
+    btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg> Dark`;
+    btn.classList.add('act');
+  } else {
+    btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg> Day`;
+    btn.classList.remove('act');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// AUTO-ADD demo orders for realism
+// ═══════════════════════════════════════════════════════
+setTimeout(()=>addDemoOrder(), 8000);
+setTimeout(()=>addDemoOrder(), 16000);
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
