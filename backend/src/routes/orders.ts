@@ -1,140 +1,205 @@
 import { Router, Request, Response } from 'express';
-import { supabase } from '../config/supabase.js';
-import { generateOrderNumber } from '../utils/orderNumber.js';
-import { z } from 'zod';
+import db from '../db/sqlite.js';
 
 const router = Router();
 
-const orderItemSchema = z.object({
-  menu_item_id: z.string().uuid(),
-  name: z.string(),
-  price: z.number(),
-  quantity: z.number().int().positive(),
-  station_id: z.string().uuid(),
-  modifiers: z.array(z.object({
-    modifier_option_id: z.string().uuid(),
-    name: z.string(),
-    price_adjustment: z.number()
-  })).optional()
-});
+function generateId() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 
-const createOrderSchema = z.object({
-  outlet_id: z.string().uuid(),
-  type: z.enum(['dine_in', 'take_away', 'gofood', 'grabfood', 'shopee']),
-  table_number: z.string().optional().nullable(),
-  customer_id: z.string().uuid().optional().nullable(),
-  user_id: z.string().uuid(),
-  shift_id: z.string().uuid(),
-  subtotal: z.number(),
-  discount_type: z.string().optional().nullable(),
-  discount_value: z.number().optional().nullable(),
-  discount_amount: z.number(),
-  tax_amount: z.number(),
-  service_charge_amount: z.number(),
-  total: z.number(),
-  notes: z.string().optional().nullable(),
-  items: z.array(orderItemSchema)
-});
+function generateOrderNumber(outletId: string) {
+  const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const count = db.prepare(`
+    SELECT COUNT(*) as cnt FROM orders 
+    WHERE outlet_id = ? AND date(created_at) = date('now')
+  `).get(outletId) as { cnt: number };
+  const seq = String((count?.cnt || 0) + 1).padStart(3, '0');
+  return `SNY-${today.slice(4)}-${seq}`;
+}
 
-// Create Order
-router.post('/', async (req: Request, res: Response, next) => {
+// POST /api/orders — Buat order baru
+router.post('/', (req: Request, res: Response) => {
   try {
-    const data = createOrderSchema.parse(req.body);
+    const {
+      outletId, userId, shiftId,
+      orderType, tableNumber, platformOrderId,
+      items, payments: paymentMethods,
+      discountType, discountValue, discountAmount,
+      notes
+    } = req.body;
 
-    const orderNumber = await generateOrderNumber(data.outlet_id);
-
-    // Insert Order
-    const { data: newOrder, error: orderError } = await supabase
-      .from('orders')
-      .insert({
-        outlet_id: data.outlet_id,
-        order_number: orderNumber,
-        type: data.type,
-        table_number: data.table_number,
-        status: 'new',
-        customer_id: data.customer_id,
-        user_id: data.user_id,
-        shift_id: data.shift_id,
-        subtotal: data.subtotal,
-        discount_type: data.discount_type,
-        discount_value: data.discount_value,
-        discount_amount: data.discount_amount,
-        tax_amount: data.tax_amount,
-        service_charge_amount: data.service_charge_amount,
-        total: data.total,
-        notes: data.notes
-      })
-      .select()
-      .single();
-
-    if (orderError || !newOrder) {
-      throw new Error(`Failed to insert order: ${orderError?.message}`);
+    if (!outletId || !userId || !shiftId || !items?.length || !paymentMethods?.length) {
+      return res.status(400).json({ success: false, error: 'Data order tidak lengkap' });
     }
 
-    // Insert Items and Modifiers
-    for (const item of data.items) {
-      const { data: newItem, error: itemError } = await supabase
-        .from('order_items')
-        .insert({
-          order_id: newOrder.id,
-          menu_item_id: item.menu_item_id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          item_status: 'new',
-          station_id: item.station_id
-        })
-        .select()
-        .single();
+    // Hitung subtotal
+    let subtotal = 0;
+    for (const item of items) {
+      const basePrice = item.price * item.quantity;
+      const modTotal = (item.modifiers || []).reduce((s: number, m: any) => s + (m.price_adjustment * item.quantity), 0);
+      subtotal += basePrice + modTotal;
+    }
 
-      if (itemError || !newItem) continue;
+    // Service charge
+    const scConfig = db.prepare('SELECT * FROM service_charge_config WHERE outlet_id = ?').get(outletId) as any;
+    const scRate = (scConfig?.is_enabled && scConfig?.rate) || 0;
+    const afterDiscount = subtotal - (discountAmount || 0);
+    const serviceChargeAmount = Math.round(afterDiscount * scRate);
+    const total = afterDiscount + serviceChargeAmount;
 
-      if (item.modifiers && item.modifiers.length > 0) {
-        const modifiersToInsert = item.modifiers.map(mod => ({
-          order_item_id: newItem.id,
-          modifier_option_id: mod.modifier_option_id,
-          name: mod.name,
-          price_adjustment: mod.price_adjustment
-        }));
+    const orderId = generateId();
+    const orderNumber = generateOrderNumber(outletId);
 
-        await supabase.from('order_item_modifiers').insert(modifiersToInsert);
+    // Insert order
+    db.prepare(`
+      INSERT INTO orders (
+        id, outlet_id, order_number, type, table_number,
+        user_id, shift_id, subtotal,
+        discount_type, discount_value, discount_amount,
+        service_charge_amount, total, notes, status, platform_order_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)
+    `).run(
+      orderId, outletId, orderNumber, orderType, tableNumber || null,
+      userId, shiftId, subtotal,
+      discountType || null, discountValue || 0, discountAmount || 0,
+      serviceChargeAmount, total, notes || null, platformOrderId || null
+    );
+
+    // Insert order items
+    const insertItem = db.prepare(`
+      INSERT INTO order_items (id, order_id, menu_item_id, name, price, quantity, item_status, station_id, notes)
+      VALUES (?, ?, ?, ?, ?, ?, 'pending', ?, ?)
+    `);
+    const insertModifier = db.prepare(`
+      INSERT INTO order_item_modifiers (id, order_item_id, modifier_option_id, name, price_adjustment)
+      VALUES (?, ?, ?, ?, ?)
+    `);
+
+    for (const item of items) {
+      const itemId = generateId();
+      insertItem.run(itemId, orderId, item.menuItemId, item.name, item.price, item.quantity, item.stationId || null, item.notes || null);
+
+      for (const mod of (item.modifiers || [])) {
+        insertModifier.run(generateId(), itemId, mod.optionId, mod.name, mod.price_adjustment || 0);
       }
     }
 
-    res.status(201).json({ success: true, order: newOrder });
-  } catch (err) {
-    next(err);
+    // Insert payments
+    const insertPayment = db.prepare(`
+      INSERT INTO payments (id, order_id, method, amount, change_amount, platform_ref)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `);
+    for (const p of paymentMethods) {
+      insertPayment.run(generateId(), orderId, p.method, p.amount, p.change || 0, p.platformRef || null);
+    }
+
+    // Fetch full order
+    const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(orderId) as any;
+    const orderItems = db.prepare(`
+      SELECT oi.*, 
+        GROUP_CONCAT(oim.name || ':' || oim.price_adjustment, '|') as modifiers_raw
+      FROM order_items oi
+      LEFT JOIN order_item_modifiers oim ON oim.order_item_id = oi.id
+      WHERE oi.order_id = ?
+      GROUP BY oi.id
+    `).all(orderId);
+
+    res.json({
+      success: true,
+      data: { ...order, order_number: orderNumber, items: orderItems }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: 'Gagal membuat order' });
   }
 });
 
-// Update Order Status
-router.patch('/:id/status', async (req: Request, res: Response, next) => {
+// GET /api/orders/shift/:shiftId — Riwayat order per shift
+router.get('/shift/:shiftId', (req: Request, res: Response) => {
+  try {
+    const { shiftId } = req.params;
+    const orders = db.prepare(`
+      SELECT o.*, u.name as cashier_name,
+        (SELECT GROUP_CONCAT(p.method || ':' || p.amount, '|') FROM payments p WHERE p.order_id = o.id) as payments_raw
+      FROM orders o
+      LEFT JOIN users u ON u.id = o.user_id
+      WHERE o.shift_id = ?
+      ORDER BY o.created_at DESC
+    `).all(shiftId) as any[];
+
+    // Attach items to each order
+    const result = orders.map((order: any) => {
+      const items = db.prepare(`
+        SELECT oi.*, 
+          GROUP_CONCAT(oim.name, ', ') as modifier_names
+        FROM order_items oi
+        LEFT JOIN order_item_modifiers oim ON oim.order_item_id = oi.id
+        WHERE oi.order_id = ?
+        GROUP BY oi.id
+      `).all(order.id);
+      return { ...order, items };
+    });
+
+    res.json({ success: true, data: result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Gagal memuat riwayat' });
+  }
+});
+
+// PUT /api/orders/:id/void — Void order
+router.put('/:id/void', (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { status } = z.object({ status: z.string() }).parse(req.body);
+    const { reason, voidBy } = req.body;
 
-    const updateData: any = { status, updated_at: new Date().toISOString() };
-    
-    if (status === 'ready') {
-      updateData.ready_at = new Date().toISOString();
-    } else if (status === 'served') {
-      updateData.served_at = new Date().toISOString();
+    if (!reason) {
+      return res.status(400).json({ success: false, error: 'Alasan void wajib diisi' });
     }
 
-    const { data: updatedOrder, error } = await supabase
-      .from('orders')
-      .update(updateData)
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) {
-      return res.status(400).json({ error: error.message });
+    const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any;
+    if (!order) {
+      return res.status(404).json({ success: false, error: 'Order tidak ditemukan' });
+    }
+    if (order.status === 'voided') {
+      return res.status(400).json({ success: false, error: 'Order sudah di-void' });
     }
 
-    res.json({ success: true, order: updatedOrder });
-  } catch (err) {
-    next(err);
+    db.prepare(`
+      UPDATE orders SET status = 'voided', void_reason = ?, void_by = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).run(reason, voidBy || null, id);
+
+    res.json({ success: true, message: 'Order berhasil di-void' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Gagal melakukan void' });
+  }
+});
+
+// GET /api/orders/config/:outletId — Config untuk POS (service charge, settings)
+router.get('/config/:outletId', (req: Request, res: Response) => {
+  try {
+    const { outletId } = req.params;
+    const sc = db.prepare('SELECT * FROM service_charge_config WHERE outlet_id = ?').get(outletId);
+    const settings = db.prepare('SELECT * FROM outlet_settings WHERE outlet_id = ?').get(outletId) as any;
+
+    res.json({
+      success: true,
+      data: {
+        service_charge: sc,
+        settings: {
+          ...settings,
+          payment_methods_enabled: settings?.payment_methods_enabled
+            ? JSON.parse(settings.payment_methods_enabled)
+            : {}
+        }
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Gagal memuat konfigurasi' });
   }
 });
 

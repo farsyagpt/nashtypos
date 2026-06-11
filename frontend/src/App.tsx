@@ -1,17 +1,16 @@
-import { Routes, Route } from 'react-router-dom'
-import HomePage from './pages/HomePage'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import POSPage from './pages/pos/POSPage'
-import KDSPage from './pages/kds/KDSPage'
-import BackofficePage from './pages/backoffice/BackofficePage'
+import HomePage from './pages/HomePage'
+import './index.css'
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/pos/*" element={<POSPage />} />
-      <Route path="/kds/*" element={<KDSPage />} />
-      <Route path="/backoffice/*" element={<BackofficePage />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/pos/*" element={<POSPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
